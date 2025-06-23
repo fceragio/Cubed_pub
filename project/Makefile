@@ -10,7 +10,9 @@ RM = rm -f
 
 SRCS = main.c \
 		inits.c \
+		map.c \
 		events.c \
+		math_utils.c \
 		render_utils.c \
 		render_2d.c
 

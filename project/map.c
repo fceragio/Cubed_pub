@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_utils.c                                     :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 21:45:40 by federico          #+#    #+#             */
-/*   Updated: 2025/06/23 16:00:48 by federico         ###   ########.fr       */
+/*   Created: 2025/06/23 22:21:34 by federico          #+#    #+#             */
+/*   Updated: 2025/06/23 22:25:36 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-void	put_pixel(t_program *program, int x, int y, int color)
+int	not_wall(int x, int y, t_program *program)
 {
-	int	offset;
+	int	**arr;
 
-	offset = (y * program->line_len) + (x * program->bpp / 8);
-	*(unsigned int *)(program->bit_addr + offset) = color;
+	arr = program->map->arr;
+	if (arr[y][x] == 1)
+		return (0);
+	return (1);
 }

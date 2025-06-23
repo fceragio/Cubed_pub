@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/06/22 02:54:59 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:45:24 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ void	program_init(t_program *program)
 
 void	map_init(t_map *map)
 {
-	map->width = 8;
-	map->height = 8;
-	map->arr = malloc(sizeof(int *) * map->height);
+	map->dimension = 8;
+	map->arr = malloc(sizeof(int *) * map->dimension);
 
 	int	i;
 	int	j;
@@ -55,20 +54,20 @@ void	map_init(t_map *map)
 					{1, 0, 1, 0, 0, 0, 0, 1},
 					{1, 0, 0, 0, 0, 0, 0, 1},
 					{1, 0, 0, 0, 1, 1, 0, 1},
-					{1, 0, 0, 0, 9, 1, 0, 1},
-					{1, 0, 0, 0, 0, 1, 0, 1},
-					{1, 1, 1, 1, 1, 1, 1, 1}};
+					{1, 0, 0, 0, 9, 1, 1, 1},
+					{1, 1, 1, 1, 1, 1, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 0}};
 	i = 0;
-	while (i < map->height)
+	while (i < map->dimension)
 	{
-		map->arr[i] = malloc(sizeof(int) * map->width);
+		map->arr[i] = malloc(sizeof(int) * map->dimension);
 		i++;
 	}
 	i = 0;
-	while (i < map->height)
+	while (i < map->dimension)
 	{
 		j = 0;
-		while (j < map->width)
+		while (j < map->dimension)
 		{
 			map->arr[i][j] = temp[i][j];
 			j++;
@@ -83,29 +82,32 @@ void	player_init(t_player *player, t_map map)
 	int	y;
 
 	y = 0;
-	while (y < map.height)
+	while (y < map.dimension)
 	{
 		x = 0;
-		while (x < map.width)
+		while (x < map.dimension)
 		{
 			if (map.arr[y][x] != 0 && map.arr[y][x] != 1)
 			{
-				player->x = x * TILE_SIZE - TILE_SIZE / 2;
-				player->y = y * TILE_SIZE - TILE_SIZE / 2;
+				player->x = x + 0.5;
+				player->y = y + 0.5;
 				player->angle = map.arr[y][x];
 			}
 			x++;
 		}
 		y++;
 	}
+	printf("player initialized\n");
+	printf("player x = %f\n", player->x);
+	printf("player y = %f\n", player->y);
 	if (player->angle == NORTH)
-		player->angle = M_PI / 2;
+		player->angle = 3 * M_PI / 2;
 	if (player->angle == SOUTH)
-		player->angle = -M_PI / 2;
+		player->angle = M_PI / 2;
 	if (player->angle == EAST)
-		player->angle = M_PI;
+		player->angle = 0;
 	if (player->angle == WEST)
-		player->angle = -M_PI;
+		player->angle = M_PI;
 	printf("player angle = %f\n", player->angle);
 }
 
@@ -127,7 +129,7 @@ void	destroy_map(t_map *map)
 	if (!map || !map->arr)
 		return ;
 	i = 0;
-	while (i < map->height)
+	while (i < map->dimension)
 	{
 		free(map->arr[i]);
 		i++;

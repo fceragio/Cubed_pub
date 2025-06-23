@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_utils.c                                     :+:      :+:    :+:   */
+/*   math_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 21:45:40 by federico          #+#    #+#             */
-/*   Updated: 2025/06/23 16:00:48 by federico         ###   ########.fr       */
+/*   Created: 2025/06/23 16:00:52 by federico          #+#    #+#             */
+/*   Updated: 2025/06/23 22:20:09 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-void	put_pixel(t_program *program, int x, int y, int color)
+double		lerp(double a, double b, double t)
 {
-	int	offset;
-
-	offset = (y * program->line_len) + (x * program->bpp / 8);
-	*(unsigned int *)(program->bit_addr + offset) = color;
+	return (a + t * (b - a));
 }
