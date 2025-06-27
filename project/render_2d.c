@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:23:59 by federico          #+#    #+#             */
-/*   Updated: 2025/06/27 18:46:59 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/27 21:58:41 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ static void	render_2d_ray(t_ray ray, t_program *program, int color)
 		y += ray.dir_y;
 		if (!not_wall(x / TILE_SIZE, y / TILE_SIZE, program))
 		{
-			printf("impact (%f, %f)\n", x / TILE_SIZE, y / TILE_SIZE);
+			if (color == PLAYER)
+				printf("impact (%f, %f)\n", x / TILE_SIZE, y / TILE_SIZE);
 			break ;
 		}
 	}
