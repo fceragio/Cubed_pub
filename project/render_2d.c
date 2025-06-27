@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:23:59 by federico          #+#    #+#             */
-/*   Updated: 2025/06/24 00:18:09 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:46:59 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,46 @@ static void render_2d_player(t_player *player, t_program *program)
 	}
 }
 
+static void	render_2d_ray(t_ray ray, t_program *program, int color)
+{
+	double	x;
+	double	y;
+
+	x = ray.x * TILE_SIZE;
+	y = ray.y * TILE_SIZE;
+	while (x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
+	{
+		put_pixel(program, x, y, color);
+		x += ray.dir_x;
+		y += ray.dir_y;
+		if (!not_wall(x / TILE_SIZE, y / TILE_SIZE, program))
+		{
+			printf("impact (%f, %f)\n", x / TILE_SIZE, y / TILE_SIZE);
+			break ;
+		}
+	}
+}
+
 static void	render_2d_rays(t_player *player, t_program *program)
 {
-	
+	t_ray	ray;
+	double	angle;
+	double	angle_step;
+	int		i;
+
+	angle = player->angle - (FOV / 2.0);
+	angle_step = FOV / ((double)NUM_RAYS - 1);
+	i = 0;
+	while (i < NUM_RAYS)
+	{
+		ray_init(&ray, player, angle);
+		if (i == (NUM_RAYS / 2))
+			render_2d_ray(ray, program, PLAYER);
+		else
+			render_2d_ray(ray, program, RAY);
+		angle += angle_step;
+		i++;
+	}
 }
 
 void	render_2d(t_program *program)

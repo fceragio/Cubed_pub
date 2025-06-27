@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/06/23 17:45:24 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:18:53 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,6 @@ void	player_init(t_player *player, t_map map)
 		}
 		y++;
 	}
-	printf("player initialized\n");
-	printf("player x = %f\n", player->x);
-	printf("player y = %f\n", player->y);
 	if (player->angle == NORTH)
 		player->angle = 3 * M_PI / 2;
 	if (player->angle == SOUTH)
@@ -108,7 +105,21 @@ void	player_init(t_player *player, t_map map)
 		player->angle = 0;
 	if (player->angle == WEST)
 		player->angle = M_PI;
-	printf("player angle = %f\n", player->angle);
+	player_aim_init(player);
+}
+
+void	player_aim_init(t_player *player)
+{
+	ray_init(&player->aim, player, player->angle);
+}
+
+void	ray_init(t_ray *ray, t_player *player, double angle)
+{
+	safe_angle(&angle);
+	ray->x = player->x;
+	ray->y = player->y;
+	ray->dir_x = safe_cos(angle);
+	ray->dir_y = safe_sin(angle);
 }
 
 int	program_close(t_program *program, int status)

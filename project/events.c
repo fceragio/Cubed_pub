@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:05:06 by federico          #+#    #+#             */
-/*   Updated: 2025/06/23 22:30:27 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:37:33 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,67 +55,63 @@ void	move_pov(int keysym, t_program *program)
 		move_left(program);
 	else if (keysym == XK_d)
 		move_right(program);
-	printf("new_position:\nx->%f\ny->%f\n", program->player->x, program->player->y);
+	player_aim_init(program->player);
 	render(program);
 }
 
 void	move_forward(t_program *program)
 {
-	printf("forward\n");
 	double	angle;
 	double	tmp_x;
 	double	tmp_y;
 
 	angle = program->player->angle;
-	tmp_x = program->player->x + cos(angle) * SPEED;
+	tmp_x = program->player->x + safe_cos(angle) * SPEED;
 	if (not_wall(tmp_x, program->player->y, program))
 		program->player->x = tmp_x;
-	tmp_y = program->player->y + sin(angle) * SPEED;
+	tmp_y = program->player->y + safe_sin(angle) * SPEED;
 	if (not_wall(program->player->x, tmp_y, program))
 		program->player->y = tmp_y;
 }
 void	move_backward(t_program *program)
 {
-	printf("backward\n");
 	double	angle;
 	double	tmp_x;
 	double	tmp_y;
 
 	angle = program->player->angle;
-	tmp_x = program->player->x - cos(angle) * SPEED;
+	tmp_x = program->player->x - safe_cos(angle) * SPEED;
 	if (not_wall(tmp_x, program->player->y, program))
 		program->player->x = tmp_x;
-	tmp_y = program->player->y - sin(angle) * SPEED;
+	tmp_y = program->player->y - safe_sin(angle) * SPEED;
 	if (not_wall(program->player->x, tmp_y, program))
 		program->player->y = tmp_y;
 }
 void	move_left(t_program *program)
 {
-	printf("left\n");
 	double	angle;
 	double	tmp_x;
 	double	tmp_y;
 
 	angle = program->player->angle;
-	tmp_x = program->player->x + sin(angle) * SPEED;
+	tmp_x = program->player->x + safe_sin(angle) * SPEED;
 	if (not_wall(tmp_x, program->player->y, program))
 		program->player->x = tmp_x;
-	tmp_y = program->player->y - cos(angle) * SPEED;
+	tmp_y = program->player->y - safe_cos(angle) * SPEED;
 	if (not_wall(program->player->x, tmp_y, program))
 		program->player->y = tmp_y;
 }
 void	move_right(t_program *program)
 {
-	printf("right\n");
 	double	angle;
 	double	tmp_x;
 	double	tmp_y;
 
 	angle = program->player->angle;
-	tmp_x = program->player->x - sin(angle) * SPEED;
+	tmp_x = program->player->x - safe_sin(angle) * SPEED;
 	if (not_wall(tmp_x, program->player->y, program))
 		program->player->x = tmp_x;
-	tmp_y = program->player->y + cos(angle) * SPEED;
+	tmp_y = program->player->y + safe_cos(angle) * SPEED;
 	if (not_wall(program->player->x, tmp_y, program))
 		program->player->y = tmp_y;
 }
@@ -126,6 +122,7 @@ void	turn_pov(int keysym, t_program *program)
 		turn_left(program);
 	else
 		turn_right(program);
+	player_aim_init(program->player);
 	render(program);
 }
 
@@ -137,7 +134,6 @@ void	turn_left(t_program *program)
 	program->player->angle = temp - M_PI / 16;
 	if (program->player->angle < 0)
 		program->player->angle += 2 * M_PI;
-	printf("angle: %f -> %f\n", temp, program->player->angle);
 }
 
 void	turn_right(t_program *program)
@@ -148,5 +144,4 @@ void	turn_right(t_program *program)
 	program->player->angle = temp + M_PI / 16;
 	if (program->player->angle >= (2 * M_PI))
 		program->player->angle = 0;
-	printf("angle: %f -> %f\n", temp, program->player->angle);
 }

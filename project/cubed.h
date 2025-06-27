@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/06/23 23:10:50 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:38:48 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,50 @@
 # include <math.h>
 
 # define DEBUG_MODE 1
-# define WIN_WIDTH	960
-# define WIN_HEIGHT 540
-# define TILE_SIZE 64
+# define EPSILON 0.0001
+# define WIN_WIDTH	1280
+# define WIN_HEIGHT 1024
+# define TILE_SIZE 32
 # define SPEED 0.05
+# define FOV (M_PI / 3.0)
+# define NUM_RAYS 65
 # define MLX_DEFAULT 0
 # define SUCCESS 0
 # define FAILURE 1
+# define VRT_HIT 96
+# define HRZ_HIT 69
 # define MALLOC_ERR 4
 # define MLX_ERR 5
 # define BLACK 0x00000000
 # define EMPTY 0x000000FF
 # define WALL 0x00FFFFFF
 # define PLAYER 0x00FF0000
+# define RAY 0x0000FF00
 # define NORTH 9
 # define SOUTH 8
 # define EAST 7
 # define WEST 6
+
+typedef struct s_point
+{
+	double	x;
+	double	y;
+}	t_point;
+
+typedef struct s_ray
+{
+	double	x;
+	double	y;
+	double	dir_x;
+	double	dir_y;
+}	t_ray;
 
 typedef struct s_player
 {
 	double	x;
 	double	y;
 	double	angle;
+	t_ray	aim;
 }	t_player;
 
 typedef struct s_map
@@ -66,11 +87,18 @@ typedef struct s_program
 	t_player	*player;
 }	t_program;
 
+double		safe_cos(double	angle);
+double		safe_sin(double angle);
+double		safe_tan(double angle);
+void		safe_angle(double *angle);
+
 void		player_init(t_player *player, t_map map);
 void		map_init(t_map *map);
 void		program_init(t_program *program);
 int			program_close(t_program *program, int status);
 void		destroy_map(t_map *map);
+void		player_aim_init(t_player *player);
+void		ray_init(t_ray *ray, t_player *player, double angle);
 
 void		hook_handlers(t_program *program);
 int			red_x_press_handling(t_program *program);
@@ -81,8 +109,6 @@ void		put_pixel(t_program *program, int x, int y, int color);
 
 void		render(t_program *program);
 void		render_2d(t_program *program);
-
-double		lerp(double a, double b, double t);
 
 void		turn_pov(int keysym, t_program *program);
 void		turn_left(t_program *program);
