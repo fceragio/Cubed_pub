@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/06/27 18:38:48 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:42:31 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # define MLX_DEFAULT 0
 # define SUCCESS 0
 # define FAILURE 1
-# define VRT_HIT 96
-# define HRZ_HIT 69
 # define MALLOC_ERR 4
 # define MLX_ERR 5
 # define BLACK 0x00000000
@@ -45,6 +43,7 @@
 # define SOUTH 8
 # define EAST 7
 # define WEST 6
+# define SPACE 42
 
 typedef struct s_point
 {
@@ -56,8 +55,11 @@ typedef struct s_ray
 {
 	double	x;
 	double	y;
+	double	angle;
 	double	dir_x;
 	double	dir_y;
+	double	step_x;
+	double	step_y;
 }	t_ray;
 
 typedef struct s_player
@@ -108,6 +110,7 @@ int			key_press_handling(int keysym, t_program *program);
 void		put_pixel(t_program *program, int x, int y, int color);
 
 void		render(t_program *program);
+void		render_3d(t_program *program);
 void		render_2d(t_program *program);
 
 void		turn_pov(int keysym, t_program *program);
@@ -121,5 +124,8 @@ void		move_left(t_program *program);
 void		move_right(t_program *program);
 
 int			not_wall(int x, int y, t_program *program);
+int			find_wall_distance(double *distance, t_ray ray, t_map *map, t_program *program);
+double		find_vertical_hit_distance(t_ray ray, t_map *map, t_program *program);
+double		find_horizontal_hit_distance(t_ray ray, t_map *map, t_program *program);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/06/27 21:56:22 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:42:52 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	map_init(t_map *map)
 						{1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1},
 						{1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1},
 						{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
-						{1, 0, 1, 1, 0, 0, 0, NORTH, 0, 0, 0, 1, 1, 1, 1, 1},
+						{1, 0, 1, 1, 0, 0, 0, EAST, 0, 0, 0, 1, 1, 1, 1, 1},
 						{1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1},
 						{1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1},
 						{1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1},
@@ -126,8 +126,17 @@ void	ray_init(t_ray *ray, t_player *player, double angle)
 	safe_angle(&angle);
 	ray->x = player->x;
 	ray->y = player->y;
+	ray->angle = angle;
 	ray->dir_x = safe_cos(angle);
 	ray->dir_y = safe_sin(angle);
+	if (ray->dir_x > 0)
+		ray->step_x = +1;
+	else
+		ray->step_x = -1;
+	if (ray->dir_y < 0)
+		ray->step_y = -1;
+	else
+		ray->step_y = +1;
 }
 
 int	program_close(t_program *program, int status)

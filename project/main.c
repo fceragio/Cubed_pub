@@ -6,14 +6,14 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:09 by federico          #+#    #+#             */
-/*   Updated: 2025/06/23 17:59:25 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:22:04 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
 /*
-the map will always be formatted as a square, adding colums or lines of 0s where necessary.
+the map will always be formatted as a square, adding colums or lines of SPACEs where necessary.
 this to semplify the logic.
 */
 
@@ -37,8 +37,7 @@ int main()
 
 void	render(t_program *program)
 {
+	render_3d(program);
 	if (DEBUG_MODE)
 		render_2d(program);
-	// else
-		// render_3d(program);
 }

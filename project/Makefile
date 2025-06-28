@@ -14,7 +14,8 @@ SRCS = main.c \
 		events.c \
 		math_utils.c \
 		render_utils.c \
-		render_2d.c
+		render_2d.c \
+		render_3d.c
 
 OBJS = $(SRCS:.c=.o)
 
