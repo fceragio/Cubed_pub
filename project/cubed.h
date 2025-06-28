@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 01:18:20 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/29 01:48:46 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_ray
 	double	dir_y;
 	double	step_x;
 	double	step_y;
+	double	hit_x;
+	double	hit_y;
 	double	len;
 	int		wall_side;
 }	t_ray;
@@ -127,8 +129,8 @@ void		move_left(t_program *program);
 void		move_right(t_program *program);
 
 int			not_wall(int x, int y, t_program *program);
-int			find_wall_distance(double *distance, t_ray ray, t_map *map, t_program *program);
-double		find_vertical_hit_distance(t_ray ray, t_map *map, t_program *program);
-double		find_horizontal_hit_distance(t_ray ray, t_map *map, t_program *program);
+int			find_wall_distance(double *distance, t_ray *ray, t_map *map, t_program *program);
+double		find_vertical_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_program *program);
+double		find_horizontal_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_program *program);
 
 #endif

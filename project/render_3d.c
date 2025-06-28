@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:22:10 by federico          #+#    #+#             */
-/*   Updated: 2025/06/28 16:37:31 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/29 01:52:06 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	render_3d(t_program *program)
 {
-	double	distance;
-	int		wall_side;
-
-	wall_side = find_wall_distance(&distance, program->player->aim, program->map, program);
-	printf("distance-> %f, hit_type-> %d\n\n", distance, wall_side);
+	printf("aim_len-> %f wall_side-> %d\n", program->player->aim.len, program->player->aim.wall_side);
+	printf("hit_x-> %f hit_y->%f\n\n", program->player->aim.hit_x, program->player->aim.hit_y);
 }

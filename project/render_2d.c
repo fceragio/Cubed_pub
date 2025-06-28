@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:23:59 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 01:27:07 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:08:31 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,45 +113,30 @@ static void render_2d_player(t_player *player, t_program *program)
 	}
 }
 
-// static void	render_2d_ray(t_ray ray, t_program *program, int color)
-// {
-// 	double	x;
-// 	double	y;
-
-// 	x = ray.x * TILE_SIZE;
-// 	y = ray.y * TILE_SIZE;		
-// 	while (x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
-// 	{
-// 		put_pixel(program, x, y, color);
-// 		x += ray.dir_x;
-// 		y += ray.dir_y;
-// 		if (!not_wall(x / TILE_SIZE, y / TILE_SIZE, program))
-// 		{
-// 			if (color == PLAYER)
-// 				printf("impact (%f, %f)\n", x / TILE_SIZE, y / TILE_SIZE);
-// 			break ;
-// 		}
-// 	}
-// }
-
 static void	render_2d_ray(t_ray ray, t_program *program, int color)
 {
-	double	x;
-	double	y;
+	int		i;
+	double	x0 = ray.x * TILE_SIZE;
+	double	y0 = ray.y * TILE_SIZE;
+	double	x1 = ray.hit_x * TILE_SIZE;
+	double	y1 = ray.hit_y * TILE_SIZE;
 
-	x = ray.x * TILE_SIZE;
-	y = ray.y * TILE_SIZE;		
-	while (x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
+	double	dx = x1 - x0;
+	double	dy = y1 - y0;
+	double	max_steps = fmax(fabs(dx), fabs(dy));
+	double	step_x = dx / max_steps;
+	double	step_y = dy / max_steps;
+
+	double	x = x0;
+	double	y = y0;
+
+	i = 0;
+	while (i <= (int)max_steps)
 	{
-		put_pixel(program, x, y, color);
-		x += ray.dir_x;
-		y += ray.dir_y;
-		if (!not_wall(x / TILE_SIZE, y / TILE_SIZE, program))
-		{
-			if (color == PLAYER)
-				printf("impact (%f, %f)\n", x / TILE_SIZE, y / TILE_SIZE);
-			break ;
-		}
+		put_pixel(program, (int)x, (int)y, color);
+		x += step_x;
+		y += step_y;
+		i++;
 	}
 }
 
@@ -175,5 +160,5 @@ void	render_2d(t_program *program)
 	render_2d_map(program->map, program);
 	render_2d_player(program->player, program);
 	render_2d_rays(program->player, program);
-	mlx_put_image_to_window(program->mlx, program->win, program->img, MLX_DEFAULT, MLX_DEFAULT);
+	// mlx_put_image_to_window(program->mlx, program->win, program->img, MLX_DEFAULT, MLX_DEFAULT);
 }
