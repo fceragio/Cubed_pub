@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/06/28 16:42:52 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/29 01:19:16 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	map_init(t_map *map)
 	}
 }
 
-void	player_init(t_player *player, t_map map)
+void	player_init(t_player *player, t_map map, t_program *program)
 {
 	int	x;
 	int	y;
@@ -113,15 +113,28 @@ void	player_init(t_player *player, t_map map)
 		player->angle = 0;
 	if (player->angle == WEST)
 		player->angle = M_PI;
-	player_aim_init(player);
+	player_aim_init(player, program);
 }
 
-void	player_aim_init(t_player *player)
+void	player_aim_init(t_player *player, t_program *program)
 {
-	ray_init(&player->aim, player, player->angle);
+	int		i;
+	double	angle;
+	double	angle_step;
+
+	ray_init(&player->aim, player, player->angle, program);
+	angle = player->angle - (FOV / 2.0);
+	angle_step = FOV / ((double)NUM_RAYS - 1);
+	i = 0;
+	while (i < NUM_RAYS)
+	{
+		ray_init(&player->fov[i], player, angle, program);
+		angle += angle_step;
+		i++;
+	}
 }
 
-void	ray_init(t_ray *ray, t_player *player, double angle)
+void	ray_init(t_ray *ray, t_player *player, double angle, t_program *program)
 {
 	safe_angle(&angle);
 	ray->x = player->x;
@@ -137,6 +150,7 @@ void	ray_init(t_ray *ray, t_player *player, double angle)
 		ray->step_y = -1;
 	else
 		ray->step_y = +1;
+	ray->wall_side = find_wall_distance(&ray->len, *ray, program->map, program);
 }
 
 int	program_close(t_program *program, int status)

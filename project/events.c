@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:05:06 by federico          #+#    #+#             */
-/*   Updated: 2025/06/27 15:37:33 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/29 01:20:00 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	move_pov(int keysym, t_program *program)
 		move_left(program);
 	else if (keysym == XK_d)
 		move_right(program);
-	player_aim_init(program->player);
+	player_aim_init(program->player, program);
 	render(program);
 }
 
@@ -122,7 +122,7 @@ void	turn_pov(int keysym, t_program *program)
 		turn_left(program);
 	else
 		turn_right(program);
-	player_aim_init(program->player);
+	player_aim_init(program->player, program);
 	render(program);
 }
 

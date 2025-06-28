@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/06/28 16:42:31 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/29 01:18:20 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_ray
 	double	dir_y;
 	double	step_x;
 	double	step_y;
+	double	len;
+	int		wall_side;
 }	t_ray;
 
 typedef struct s_player
@@ -68,6 +70,7 @@ typedef struct s_player
 	double	y;
 	double	angle;
 	t_ray	aim;
+	t_ray	fov[NUM_RAYS];
 }	t_player;
 
 typedef struct s_map
@@ -94,13 +97,13 @@ double		safe_sin(double angle);
 double		safe_tan(double angle);
 void		safe_angle(double *angle);
 
-void		player_init(t_player *player, t_map map);
+void		player_init(t_player *player, t_map map, t_program *program);
 void		map_init(t_map *map);
 void		program_init(t_program *program);
 int			program_close(t_program *program, int status);
 void		destroy_map(t_map *map);
-void		player_aim_init(t_player *player);
-void		ray_init(t_ray *ray, t_player *player, double angle);
+void		player_aim_init(t_player *player, t_program *program);
+void		ray_init(t_ray *ray, t_player *player, double angle, t_program *program);
 
 void		hook_handlers(t_program *program);
 int			red_x_press_handling(t_program *program);
