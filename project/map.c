@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:21:34 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 01:50:08 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/29 02:53:42 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,82 +52,106 @@ int	find_wall_distance(double *distance, t_ray *ray, t_map *map, t_program *prog
 	return (SOUTH);
 }
 
+static void	set_vertical_base(double *x, double *y, t_ray *ray)
+{
+	double	dx;
+	double	dy;
+
+	if (ray->step_x > 0)
+		*x = floor(ray->x) + 1.0;
+	else
+		*x = floor(ray->x);
+	dx = *x - ray->x;
+	dy = dx * (ray->dir_y / ray->dir_x);
+	*y = ray->y + dy;
+}
+
+static void	set_vertical_map(int *map_x, double x, t_ray *ray)
+{
+	if (ray->step_x < 0)
+		*map_x = (int)(x - 1);
+	else
+		*map_x = (int)(x);
+}
+
 double	find_vertical_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_program *program)
 {
-	double x, y;
-	double dx, dy;
-	double delta_x, delta_y;
+	double	x;
+	double	y;
+	double	step_x;
+	double	step_y;
+	int		map_x;
+	int		map_y;
 
-	// Calcola la prima intersezione verticale
-	if (ray->step_x > 0)
-		x = floor(ray->x) + 1.0;
-	else
-		x = floor(ray->x);
-
-	dx = x - ray->x;
-	dy = dx * (ray->dir_y / ray->dir_x);
-	y = ray->y + dy;
-
-	// Calcola incremento per ciascun passo
-	delta_x = ray->step_x * 1.0;
-	delta_y = delta_x * (ray->dir_y / ray->dir_x);
-
-	// Itera finché non colpisce un muro
+	set_vertical_base(&x, &y, ray);
+	step_x = ray->step_x * 1.0;
+	step_y = step_x * (ray->dir_y / ray->dir_x);
 	while (x >= 0 && x < map->dimension && y >= 0 && y < map->dimension)
 	{
-		int map_x = (int)(x + (ray->step_x < 0 ? -1 : 0)); // lato corretto
-		int map_y = (int)(y);
-
+		set_vertical_map(&map_x, x, ray);
+		map_y = (int)y;
 		if (!not_wall(map_x, map_y, program))
 		{
 			hit->x = x;
 			hit->y = y;
 			return hypot(x - ray->x, y - ray->y);
 		}
-		x += delta_x;
-		y += delta_y;
+		x += step_x;
+		y += step_y;
 	}
 	hit->x = x;
 	hit->y = y;
-	return INFINITY;
+	return (INFINITY);
+}
+
+static void	set_horizontal_base(double *x, double *y, t_ray *ray)
+{
+	double	dx;
+	double	dy;
+
+	if (ray->step_y > 0)
+		*y = floor(ray->y) + 1.0;
+	else
+		*y = floor(ray->y);
+	dy = *y - ray->y;
+	dx = dy * (ray->dir_x / ray->dir_y);
+	*x = ray->x + dx;
+}
+
+static void	set_horizontal_map(int *map_y, double y, t_ray *ray)
+{
+	if (ray->step_y < 0)
+		*map_y = (int)(y - 1);
+	else
+		*map_y = (int)(y);
 }
 
 double	find_horizontal_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_program *program)
 {
-	double x, y;
-	double dx, dy;
-	double delta_x, delta_y;
+	double	x;
+	double	y;
+	double	step_x;
+	double	step_y;
+	int		map_x;
+	int		map_y;
 
-	// Calcola la prima intersezione orizzontale
-	if (ray->step_y > 0)
-		y = floor(ray->y) + 1.0;
-	else
-		y = floor(ray->y);
-
-	dy = y - ray->y;
-	dx = dy * (ray->dir_x / ray->dir_y);
-	x = ray->x + dx;
-
-	// Calcola incremento per ciascun passo
-	delta_y = ray->step_y * 1.0;
-	delta_x = delta_y * (ray->dir_x / ray->dir_y);
-
-	// Itera finché non colpisce un muro
+	set_horizontal_base(&x, &y, ray);
+	step_y = ray->step_y * 1.0;
+	step_x = step_y * (ray->dir_x / ray->dir_y);
 	while (x >= 0 && x < map->dimension && y >= 0 && y < map->dimension)
 	{
-		int map_x = (int)(x);
-		int map_y = (int)(y + (ray->step_y < 0 ? -1 : 0)); // lato corretto
-
+		set_horizontal_map(&map_y, y, ray);
+		map_x = (int)(x);
 		if (!not_wall(map_x, map_y, program))
 		{
 			hit->x = x;
 			hit->y = y;
 			return hypot(x - ray->x, y - ray->y);
 		}
-		x += delta_x;
-		y += delta_y;
+		x += step_x;
+		y += step_y;
 	}
 	hit->x = x;
 	hit->y = y;
-	return INFINITY;
+	return (INFINITY);
 }

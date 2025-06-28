@@ -1,10 +1,7 @@
-#Makefile#
-
 NAME = cubed
 
 CC = cc
-
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -Werror -O3 -MMD -MP
 
 RM = rm -f
 
@@ -18,6 +15,7 @@ SRCS = main.c \
 		render_3d.c
 
 OBJS = $(SRCS:.c=.o)
+DEPS = $(OBJS:.o=.d)
 
 COLOR_GREEN=\033[0;32m
 COLOR_END=\033[0m
@@ -29,13 +27,15 @@ $(NAME): $(OBJS)
 	@echo "$(COLOR_GREEN)$(NAME) created.✅$(COLOR_END)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -c $< -o $@
+
+-include $(DEPS)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(DEPS)
 
 fclean: clean
-	$(RM) $(NAME) $(BONUS)
+	$(RM) $(NAME)
 	@echo "$(COLOR_GREEN)$(NAME) cleaned.✅$(COLOR_END)"
 
 re: fclean all
