@@ -28,7 +28,7 @@ to avoid skipping colums, also WIN_WIDTH has to be a multiple of NUM_RAYS;
 so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 */
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE 0
 # define EPSILON 0.0001
 # define WIN_WIDTH	2064
 # define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)

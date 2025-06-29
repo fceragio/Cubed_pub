@@ -143,3 +143,104 @@ void	turn_right(t_program *program)
 	if (program->player->angle >= (2 * M_PI))
 		program->player->angle = 0;
 }
+
+// ✅ Soluzione: gestione dello stato dei tasti manualmente
+
+// Anziché reagire direttamente all’evento key_press, devi:
+
+//     Registrare quali tasti sono premuti.
+
+//     In loop_hook, muovere il personaggio ogni frame in base allo stato corrente dei tasti.
+
+// 🔧 1. Aggiungi una struttura per i tasti
+
+// Nel tuo t_program puoi aggiungere:
+
+// typedef struct s_keys
+// {
+// 	bool	w;
+// 	bool	a;
+// 	bool	s;
+// 	bool	d;
+// 	bool	left;
+// 	bool	right;
+// }	t_keys;
+
+// Poi nel tuo t_program:
+
+// typedef struct s_program
+// {
+// 	// ...
+// 	t_keys	keys;
+// 	// ...
+// }	t_program;
+
+// 🎯 2. Gestisci key_press e key_release
+
+// int	key_press(int keycode, t_program *program)
+// {
+// 	if (keycode == W_KEY)
+// 		program->keys.w = true;
+// 	else if (keycode == A_KEY)
+// 		program->keys.a = true;
+// 	else if (keycode == S_KEY)
+// 		program->keys.s = true;
+// 	else if (keycode == D_KEY)
+// 		program->keys.d = true;
+// 	else if (keycode == LEFT_KEY)
+// 		program->keys.left = true;
+// 	else if (keycode == RIGHT_KEY)
+// 		program->keys.right = true;
+// 	return (0);
+// }
+
+// int	key_release(int keycode, t_program *program)
+// {
+// 	if (keycode == W_KEY)
+// 		program->keys.w = false;
+// 	else if (keycode == A_KEY)
+// 		program->keys.a = false;
+// 	else if (keycode == S_KEY)
+// 		program->keys.s = false;
+// 	else if (keycode == D_KEY)
+// 		program->keys.d = false;
+// 	else if (keycode == LEFT_KEY)
+// 		program->keys.left = false;
+// 	else if (keycode == RIGHT_KEY)
+// 		program->keys.right = false;
+// 	return (0);
+// }
+
+// Non dimenticare di registrare gli hook nel tuo hook_handlers:
+
+// mlx_hook(program->win, 2, 1L << 0, key_press, program);
+// mlx_hook(program->win, 3, 1L << 1, key_release, program);
+
+// 🚀 3. Muovi il personaggio in loop_hook
+
+// Nel tuo loop_hook, dopo il controllo del timer FPS:
+
+// void	update_player(t_program *program)
+// {
+// 	if (program->keys.w)
+// 		move_forward(program->player);
+// 	if (program->keys.s)
+// 		move_backward(program->player);
+// 	if (program->keys.a)
+// 		strafe_left(program->player);
+// 	if (program->keys.d)
+// 		strafe_right(program->player);
+// 	if (program->keys.left)
+// 		rotate_left(program->player);
+// 	if (program->keys.right)
+// 		rotate_right(program->player);
+// }
+
+// Poi in loop_hook:
+
+// if (total_us >= U_FPS)
+// {
+// 	update_player(program);
+// 	render(program);
+// 	// ...
+// }
