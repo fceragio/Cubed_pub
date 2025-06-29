@@ -44,6 +44,8 @@ void	program_init(t_program *program)
 
 void	map_init(t_map *map)
 {
+	map->floor_color = FLOOR;
+	map->sealing_color = SEALING;
 	map->dimension = 16;
 	map->arr = malloc(sizeof(int *) * map->dimension);
 

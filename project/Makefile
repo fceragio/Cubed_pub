@@ -1,7 +1,7 @@
 NAME = cubed
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -O3 -MMD -MP
+CFLAGS = -Wall -Wextra -O3 -MMD -MP #-Werror
 
 RM = rm -f
 

@@ -145,6 +145,7 @@ static void	render_2d_rays(t_player *player, t_program *program)
 	int		i;
 
 	i = 0;
+	render_2d_ray(player->aim, program, AIM);
 	while (i < NUM_RAYS)
 	{
 		if (i == (NUM_RAYS / 2))
@@ -160,5 +161,4 @@ void	render_2d(t_program *program)
 	render_2d_map(program->map, program);
 	render_2d_player(program->player, program);
 	render_2d_rays(program->player, program);
-	// mlx_put_image_to_window(program->mlx, program->win, program->img, MLX_DEFAULT, MLX_DEFAULT);
 }

@@ -21,14 +21,22 @@
 # include <stdio.h>
 # include <math.h>
 
-# define DEBUG_MODE 1
+/*
+for now NUM_RAYS has to be an odd number to alline perfectly with player->aim;
+to avoid skipping colums, also WIN_WIDTH has to be a multiple of NUM_RAYS;
+so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
+*/
+
+# define DEBUG_MODE 0
 # define EPSILON 0.0001
-# define WIN_WIDTH	1280
-# define WIN_HEIGHT 1024
-# define TILE_SIZE 32
+# define WIN_WIDTH	2064
+# define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)
+# define TILE_SIZE 64
+# define SPRITE_SIZE 512
 # define SPEED 0.05
-# define FOV (M_PI / 3.0)
-# define NUM_RAYS 65
+# define FOV (M_PI / 2.5)
+# define NUM_RAYS (WIN_WIDTH / 16)
+# define WID_RAYS (WIN_WIDTH / NUM_RAYS)
 # define MLX_DEFAULT 0
 # define SUCCESS 0
 # define FAILURE 1
@@ -36,8 +44,11 @@
 # define MLX_ERR 5
 # define BLACK 0x00000000
 # define EMPTY 0x000000FF
+# define FLOOR 0x656565FF
+# define SEALING 0x00545454
 # define WALL 0x00FFFFFF
 # define PLAYER 0x00FF0000
+# define AIM 0x00FFFF00
 # define RAY 0x0000FF00
 # define NORTH 9
 # define SOUTH 8
@@ -79,6 +90,8 @@ typedef struct s_map
 {
 	int		**arr;
 	int		dimension;
+	int		sealing_color;
+	int		floor_color;
 }	t_map;
 
 typedef struct s_program
