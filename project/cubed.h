@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <math.h>
+# include <sys/time.h>
 
 /*
 for now NUM_RAYS has to be an odd number to alline perfectly with player->aim;
@@ -27,12 +28,15 @@ to avoid skipping colums, also WIN_WIDTH has to be a multiple of NUM_RAYS;
 so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 */
 
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 # define EPSILON 0.0001
 # define WIN_WIDTH	2064
 # define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)
 # define TILE_SIZE 64
 # define SPRITE_SIZE 512
+# define U_SEC 1000000
+# define FPS 60
+# define U_FPS (U_SEC / FPS)
 # define SPEED 0.05
 # define FOV (M_PI / 2.5)
 # define NUM_RAYS (WIN_WIDTH / 16)
@@ -127,7 +131,9 @@ int			key_press_handling(int keysym, t_program *program);
 
 void		put_pixel(t_program *program, int x, int y, int color);
 
+void		rendering(t_program *program);
 void		render(t_program *program);
+int			loop_hook(t_program *program);
 void		render_3d(t_program *program);
 void		render_2d(t_program *program);
 

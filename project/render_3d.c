@@ -70,7 +70,6 @@ static void	render_walls(t_program *program)
 	i = 0;
 	while (i <= NUM_RAYS)
 	{
-		printf("i = %d\n", i);
 		x = WID_RAYS * i;
 		while (x <= (WID_RAYS * (i + 1)))
 		{
@@ -79,12 +78,10 @@ static void	render_walls(t_program *program)
 		}
 		i++;
 	}
-	printf("%d\n", (WID_RAYS * (i + 1)));
 }
 
 void	render_3d(t_program *program)
 {
-	printf("render_3d\n");
 	render_sealing(program);
 	render_floor(program);
 	render_walls(program);

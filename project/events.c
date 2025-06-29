@@ -27,7 +27,7 @@ int	red_x_press_handling(t_program *program)
 
 int	visibility_handling(t_program *program)
 {
-	render(program);
+	(void)program;
 	return (SUCCESS);
 }
 
@@ -56,7 +56,6 @@ void	move_pov(int keysym, t_program *program)
 	else if (keysym == XK_d)
 		move_right(program);
 	player_aim_init(program->player, program);
-	render(program);
 }
 
 void	move_forward(t_program *program)
@@ -123,7 +122,6 @@ void	turn_pov(int keysym, t_program *program)
 	else
 		turn_right(program);
 	player_aim_init(program->player, program);
-	render(program);
 }
 
 void	turn_left(t_program *program)
