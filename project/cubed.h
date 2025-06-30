@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 02:59:07 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/30 23:42:59 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ to avoid skipping colums, also WIN_WIDTH has to be a multiple of NUM_RAYS;
 so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 */
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE 0
 # define EPSILON 0.0001
 # define WIN_WIDTH	2064
 # define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)

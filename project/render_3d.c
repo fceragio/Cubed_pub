@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:22:10 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 01:52:06 by federico         ###   ########.fr       */
+/*   Updated: 2025/06/30 23:42:21 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	get_east_wall_color(t_map *map, int i, int len)
 	return (0x00969696);
 }
 
-static int	get_wall_color(t_map *map, int wall_side, i, len)
+static int	get_wall_color(t_map *map, int wall_side, int i, int len)
 {
 	if (wall_side == NORTH)
 		return (get_north_wall_color(map, i, len));
