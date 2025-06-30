@@ -48,16 +48,50 @@ static void	render_floor(t_program *program)
 	}
 }
 
+int	get_north_wall_color(t_map *map, int i, int len)
+{
+	return (0x00000000);
+}
+int	get_south_wall_color(t_map *map, int i, int len)
+{
+	return (0x00FFFFFFFF);
+}
+int	get_west_wall_color(t_map *map, int i, int len)
+{
+	return (0x00696969);
+}
+int	get_east_wall_color(t_map *map, int i, int len)
+{
+	return (0x00969696);
+}
+
+static int	get_wall_color(t_map *map, int wall_side, i, len)
+{
+	if (wall_side == NORTH)
+		return (get_north_wall_color(map, i, len));
+	else if (wall_side == SOUTH)
+		return (get_south_wall_color(map, i, len));
+	else if (wall_side == WEST)
+		return (get_west_wall_color(map, i, len));
+	else if (wall_side == EAST)
+		return (get_east_wall_color(map, i, len));
+	return (FAILURE);
+}
+
 static void	put_ray_pixels(int x, int i, t_program *program)
 {
 	int	y;
+	int	y_start;
 	int	y_end;
+	int	color;
 
-	y = (WIN_HEIGHT / 2) - (SPRITE_SIZE / program->player->fov[i].len);
+	y_start = (WIN_HEIGHT / 2) - (SPRITE_SIZE / program->player->fov[i].len);
 	y_end = (WIN_HEIGHT / 2) + (SPRITE_SIZE / program->player->fov[i].len);
+	y = y_start;
 	while (y <= y_end)
 	{
-		put_pixel(program, x, y, WALL);
+		color = get_wall_color(program->map, program->player->fov[i].wall_side, y, y_end - y_start);
+		put_pixel(program, x, y, color);
 		y++;
 	}
 }

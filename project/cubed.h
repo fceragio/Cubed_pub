@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <math.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 /*
 for now NUM_RAYS has to be an odd number to alline perfectly with player->aim;
@@ -28,16 +29,17 @@ to avoid skipping colums, also WIN_WIDTH has to be a multiple of NUM_RAYS;
 so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 */
 
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 # define EPSILON 0.0001
 # define WIN_WIDTH	2064
 # define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)
 # define TILE_SIZE 64
 # define SPRITE_SIZE 512
 # define U_SEC 1000000
-# define FPS 60
+# define FPS 20
 # define U_FPS (U_SEC / FPS)
 # define SPEED 0.05
+# define SENSITIVITY (M_PI / 64.0)
 # define FOV (M_PI / 2.5)
 # define NUM_RAYS (WIN_WIDTH / 16)
 # define WID_RAYS (WIN_WIDTH / NUM_RAYS)
@@ -98,6 +100,16 @@ typedef struct s_map
 	int		floor_color;
 }	t_map;
 
+typedef struct s_commands
+{
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
+	bool	l_arrow;
+	bool	r_arrow;
+}	t_commands;
+
 typedef struct s_program
 {
 	void		*mlx;
@@ -109,6 +121,7 @@ typedef struct s_program
 	int			endian;
 	t_map		*map;
 	t_player	*player;
+	t_commands	commands;
 }	t_program;
 
 double		safe_cos(double	angle);
@@ -116,9 +129,11 @@ double		safe_sin(double angle);
 double		safe_tan(double angle);
 void		safe_angle(double *angle);
 
+void		program_init(t_program *program, t_map *map, t_player *player);
 void		player_init(t_player *player, t_map map, t_program *program);
+void		commands_init(t_program *program);
 void		map_init(t_map *map);
-void		program_init(t_program *program);
+void		vs_init(t_program *program);
 int			program_close(t_program *program, int status);
 void		destroy_map(t_map *map);
 void		player_aim_init(t_player *player, t_program *program);
@@ -128,6 +143,8 @@ void		hook_handlers(t_program *program);
 int			red_x_press_handling(t_program *program);
 int			visibility_handling(t_program *program);
 int			key_press_handling(int keysym, t_program *program);
+int			key_release_handling(int keysym, t_program *program);
+void		update_player(t_program *program);
 
 void		put_pixel(t_program *program, int x, int y, int color);
 

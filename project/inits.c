@@ -12,7 +12,7 @@
 
 #include "cubed.h"
 
-void	program_init(t_program *program)
+void	vs_init(t_program *program)
 {
 	program->mlx = mlx_init();
 	if (!program->mlx)
@@ -40,6 +40,16 @@ void	program_init(t_program *program)
 	program->bit_addr = mlx_get_data_addr(program->img, &program->bpp, &program->line_len, &program->endian);
 	if (!program->bit_addr)
 		program_close(program, MLX_ERR);
+}
+
+void	commands_init(t_program *program)
+{
+	program->commands.w = false;
+	program->commands.a = false;
+	program->commands.s = false;
+	program->commands.d = false;
+	program->commands.l_arrow = false;
+	program->commands.r_arrow = false;
 }
 
 void	map_init(t_map *map)
