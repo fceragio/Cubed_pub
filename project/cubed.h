@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/06/30 23:42:59 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:11:19 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_ray
 	double	hit_x;
 	double	hit_y;
 	double	len;
+	double	distance;
 	int		wall_side;
 }	t_ray;
 

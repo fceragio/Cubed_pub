@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 01:36:49 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:13:04 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void	ray_init(t_ray *ray, t_player *player, double angle, t_program *program)
 	else
 		ray->step_y = +1;
 	ray->wall_side = find_wall_distance(&ray->len, ray, program->map, program);
+	ray->distance = ray->len * safe_cos(ray->angle - player->angle);
 }
 
 int	program_close(t_program *program, int status)
