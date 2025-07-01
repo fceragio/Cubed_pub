@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:22:10 by federico          #+#    #+#             */
-/*   Updated: 2025/07/01 16:15:34 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:34:25 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ static void	put_ray_pixels(int x, int i, t_program *program)
 	int	y_end;
 	int	color;
 
-	y_start = (WIN_HEIGHT / 2) - (SPRITE_SIZE / program->player->fov[i].distance);
-	y_end = (WIN_HEIGHT / 2) + (SPRITE_SIZE / program->player->fov[i].distance);
+	y_start = (WIN_HEIGHT / 2) - (WALL_SIZE / program->player->fov[i].distance);
+	y_end = (WIN_HEIGHT / 2) + (WALL_SIZE / program->player->fov[i].distance);
 	y = y_start;
 	while (y <= y_end)
 	{

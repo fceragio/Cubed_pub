@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/01 16:11:19 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:36:05 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 # define WIN_WIDTH	2064
 # define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)
 # define TILE_SIZE 64
-# define SPRITE_SIZE 512
+# define WALL_SIZE 512
 # define U_SEC 1000000
 # define FPS 20
 # define U_FPS (U_SEC / FPS)
@@ -93,12 +93,23 @@ typedef struct s_player
 	t_ray	fov[NUM_RAYS];
 }	t_player;
 
+typedef struct s_sprite
+{
+	void	*image;
+	int		width;
+	int		height;
+}	t_sprite;
+
 typedef struct s_map
 {
-	int		**arr;
-	int		dimension;
-	int		sealing_color;
-	int		floor_color;
+	int			**arr;
+	int			dimension;
+	int			sealing_color;
+	int			floor_color;
+	t_sprite	north_wall_texture;
+	t_sprite	south_wall_texture;
+	t_sprite	west_wall_texture;
+	t_sprite	east_wall_texture;
 }	t_map;
 
 typedef struct s_commands
@@ -133,7 +144,7 @@ void		safe_angle(double *angle);
 void		program_init(t_program *program, t_map *map, t_player *player);
 void		player_init(t_player *player, t_map map, t_program *program);
 void		commands_init(t_program *program);
-void		map_init(t_map *map);
+void		map_init(t_map *map, void *mlx);
 void		vs_init(t_program *program);
 int			program_close(t_program *program, int status);
 void		destroy_map(t_map *map);

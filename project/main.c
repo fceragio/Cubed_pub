@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:09 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 02:08:53 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:12:00 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main()
 void	program_init(t_program *program, t_map *map, t_player *player)
 {
 	vs_init(program);
-	map_init(map);
+	map_init(map, program->mlx);
 	program->map = map;
 	player_init(player, *map, program);
 	program->player = player;

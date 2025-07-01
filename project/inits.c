@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/07/01 16:13:04 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:32:13 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	commands_init(t_program *program)
 	program->commands.r_arrow = false;
 }
 
-void	map_init(t_map *map)
+void	map_init(t_map *map, void *mlx)
 {
 	map->floor_color = FLOOR;
 	map->sealing_color = SEALING;
@@ -94,6 +94,18 @@ void	map_init(t_map *map)
 		}
 		i++;
 	}
+	map->north_wall_texture.image = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->north_wall_texture.width, &map->north_wall_texture.height);
+	if (map->north_wall_texture.image != NULL)
+		printf("%p\n%d\n%d\n", map->north_wall_texture.image, map->north_wall_texture.width, map->north_wall_texture.height);
+	map->south_wall_texture.image = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->south_wall_texture.width, &map->south_wall_texture.height);
+	if (map->south_wall_texture.image != NULL)
+		printf("%p\n%d\n%d\n", map->south_wall_texture.image, map->south_wall_texture.width, map->south_wall_texture.height);
+	map->west_wall_texture.image = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->west_wall_texture.width, &map->west_wall_texture.height);
+	if (map->west_wall_texture.image != NULL)
+		printf("%p\n%d\n%d\n", map->west_wall_texture.image, map->west_wall_texture.width, map->west_wall_texture.height);
+	map->east_wall_texture.image = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->east_wall_texture.width, &map->east_wall_texture.height);
+	if (map->east_wall_texture.image != NULL)
+		printf("%p\n%d\n%d\n", map->east_wall_texture.image, map->east_wall_texture.width, map->east_wall_texture.height);
 }
 
 void	player_init(t_player *player, t_map map, t_program *program)
