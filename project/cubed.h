@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/01 17:36:05 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:40:16 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,23 @@ so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 # define PLAYER 0x00FF0000
 # define AIM 0x00FFFF00
 # define RAY 0x0000FF00
+# define ERROR_COLOR 0xFF00FFFF
 # define NORTH 9
 # define SOUTH 8
 # define EAST 7
 # define WEST 6
 # define SPACE 42
+
+typedef struct s_mlx_data
+{
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*bit_addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
+}	t_mlx_data;
 
 typedef struct s_point
 {
@@ -95,9 +107,9 @@ typedef struct s_player
 
 typedef struct s_sprite
 {
-	void	*image;
-	int		width;
-	int		height;
+	int			width;
+	int			height;
+	t_mlx_data	mlx_data;
 }	t_sprite;
 
 typedef struct s_map
@@ -106,10 +118,10 @@ typedef struct s_map
 	int			dimension;
 	int			sealing_color;
 	int			floor_color;
-	t_sprite	north_wall_texture;
-	t_sprite	south_wall_texture;
-	t_sprite	west_wall_texture;
-	t_sprite	east_wall_texture;
+	t_sprite	*north_wall_texture;
+	t_sprite	*south_wall_texture;
+	t_sprite	*west_wall_texture;
+	t_sprite	*east_wall_texture;
 }	t_map;
 
 typedef struct s_commands
@@ -124,13 +136,7 @@ typedef struct s_commands
 
 typedef struct s_program
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	char		*bit_addr;
-	int			bpp;
-	int			line_len;
-	int			endian;
+	t_mlx_data	mlx_data;
 	t_map		*map;
 	t_player	*player;
 	t_commands	commands;
@@ -144,7 +150,8 @@ void		safe_angle(double *angle);
 void		program_init(t_program *program, t_map *map, t_player *player);
 void		player_init(t_player *player, t_map map, t_program *program);
 void		commands_init(t_program *program);
-void		map_init(t_map *map, void *mlx);
+void		map_init(t_map *map, t_mlx_data *mlx);
+t_sprite	*sprite_init(void *mlx, char *path);
 void		vs_init(t_program *program);
 int			program_close(t_program *program, int status);
 void		destroy_map(t_map *map);

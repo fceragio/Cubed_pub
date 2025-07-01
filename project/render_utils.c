@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:45:40 by federico          #+#    #+#             */
-/*   Updated: 2025/06/26 19:42:33 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:31:53 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	put_pixel(t_program *program, int x, int y, int color)
 
 	if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
 		return ;
-	offset = (y * program->line_len) + (x * program->bpp / 8);
-	*(unsigned int *)(program->bit_addr + offset) = color;
+	offset = (y * program->mlx_data.line_len) + (x * program->mlx_data.bpp / 8);
+	*(unsigned int *)(program->mlx_data.bit_addr + offset) = color;
 }
 
 void	render(t_program *program)
@@ -28,7 +28,7 @@ void	render(t_program *program)
 		render_2d(program);
 	else
 		render_3d(program);
-	mlx_put_image_to_window(program->mlx, program->win, program->img, MLX_DEFAULT, MLX_DEFAULT);
+	mlx_put_image_to_window(program->mlx_data.mlx, program->mlx_data.win, program->mlx_data.img, MLX_DEFAULT, MLX_DEFAULT);
 }
 
 int	loop_hook(t_program *program)

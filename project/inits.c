@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/07/01 17:32:13 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:28:22 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 void	vs_init(t_program *program)
 {
-	program->mlx = mlx_init();
-	if (!program->mlx)
+	program->mlx_data.mlx = mlx_init();
+	if (!program->mlx_data.mlx)
 	{
 		destroy_map(program->map);
 		exit(MLX_ERR);
 	}
-	program->win = mlx_new_window(program->mlx, WIN_WIDTH, WIN_HEIGHT, "Cubed");
-	if (!program->win)
+	program->mlx_data.win = mlx_new_window(program->mlx_data.mlx, WIN_WIDTH, WIN_HEIGHT, "Cubed");
+	if (!program->mlx_data.win)
 	{
 		destroy_map(program->map);
-		mlx_destroy_display(program->mlx);
-		free(program->mlx);
+		mlx_destroy_display(program->mlx_data.mlx);
+		free(program->mlx_data.mlx);
 		exit(MLX_ERR);
 	}
-	program->img = mlx_new_image(program->mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!program->img)
+	program->mlx_data.img = mlx_new_image(program->mlx_data.mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!program->mlx_data.img)
 	{
 		destroy_map(program->map);
-		mlx_destroy_window(program->mlx, program->win);
-		mlx_destroy_display(program->mlx);
-		free(program->mlx);
+		mlx_destroy_window(program->mlx_data.mlx, program->mlx_data.win);
+		mlx_destroy_display(program->mlx_data.mlx);
+		free(program->mlx_data.mlx);
 		exit(MLX_ERR);
 	}
-	program->bit_addr = mlx_get_data_addr(program->img, &program->bpp, &program->line_len, &program->endian);
-	if (!program->bit_addr)
+	program->mlx_data.bit_addr = mlx_get_data_addr(program->mlx_data.img, &program->mlx_data.bpp, &program->mlx_data.line_len, &program->mlx_data.endian);
+	if (!program->mlx_data.bit_addr)
 		program_close(program, MLX_ERR);
 }
 
@@ -52,7 +52,7 @@ void	commands_init(t_program *program)
 	program->commands.r_arrow = false;
 }
 
-void	map_init(t_map *map, void *mlx)
+void	map_init(t_map *map, t_mlx_data *mlx_data)
 {
 	map->floor_color = FLOOR;
 	map->sealing_color = SEALING;
@@ -94,18 +94,48 @@ void	map_init(t_map *map, void *mlx)
 		}
 		i++;
 	}
-	map->north_wall_texture.image = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->north_wall_texture.width, &map->north_wall_texture.height);
-	if (map->north_wall_texture.image != NULL)
-		printf("%p\n%d\n%d\n", map->north_wall_texture.image, map->north_wall_texture.width, map->north_wall_texture.height);
-	map->south_wall_texture.image = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->south_wall_texture.width, &map->south_wall_texture.height);
-	if (map->south_wall_texture.image != NULL)
-		printf("%p\n%d\n%d\n", map->south_wall_texture.image, map->south_wall_texture.width, map->south_wall_texture.height);
-	map->west_wall_texture.image = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->west_wall_texture.width, &map->west_wall_texture.height);
-	if (map->west_wall_texture.image != NULL)
-		printf("%p\n%d\n%d\n", map->west_wall_texture.image, map->west_wall_texture.width, map->west_wall_texture.height);
-	map->east_wall_texture.image = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->east_wall_texture.width, &map->east_wall_texture.height);
-	if (map->east_wall_texture.image != NULL)
-		printf("%p\n%d\n%d\n", map->east_wall_texture.image, map->east_wall_texture.width, map->east_wall_texture.height);
+	map->north_wall_texture = sprite_init(mlx_data->mlx, "../wall_test.xpm");
+	map->south_wall_texture = sprite_init(mlx_data->mlx, "../wall_test.xpm");
+	map->west_wall_texture = sprite_init(mlx_data->mlx, "../wall_test.xpm");
+	map->east_wall_texture = sprite_init(mlx_data->mlx, "../wall_test.xpm");
+	// map->north_wall_texture.mlx_data.img = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->north_wall_texture.width, &map->north_wall_texture.height);
+	// if (map->north_wall_texture.mlx_data.img != NULL)
+	// 	printf("%p\n%d\n%d\n", map->north_wall_texture.mlx_data.img, map->north_wall_texture.width, map->north_wall_texture.height);
+	// map->south_wall_texture.mlx_data.img = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->south_wall_texture.width, &map->south_wall_texture.height);
+	// if (map->south_wall_texture.mlx_data.img != NULL)
+	// 	printf("%p\n%d\n%d\n", map->south_wall_texture.mlx_data.img, map->south_wall_texture.width, map->south_wall_texture.height);
+	// map->west_wall_texture.mlx_data.img = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->west_wall_texture.width, &map->west_wall_texture.height);
+	// if (map->west_wall_texture.mlx_data.img != NULL)
+	// 	printf("%p\n%d\n%d\n", map->west_wall_texture.mlx_data.img, map->west_wall_texture.width, map->west_wall_texture.height);
+	// map->east_wall_texture.mlx_data.img = mlx_xpm_file_to_image(mlx, "../wall_test.xpm", &map->east_wall_texture.width, &map->east_wall_texture.height);
+	// if (map->east_wall_texture.mlx_data.img != NULL)
+	// 	printf("%p\n%d\n%d\n", map->east_wall_texture.mlx_data.img, map->east_wall_texture.width, map->east_wall_texture.height);
+}
+
+t_sprite	*sprite_init(void *mlx, char *path)
+{
+	printf("initializing sprite\n");
+	t_sprite	*result;
+
+	result = malloc(sizeof(t_sprite));
+	if (result == NULL)
+		exit(1);
+	//remember to manage later;
+	printf("1\n");
+	result->mlx_data.mlx = NULL;
+	result->mlx_data.win = NULL;
+	result->mlx_data.img = mlx_xpm_file_to_image(mlx, path, &result->width, &result->height);
+	if (result->mlx_data.img == NULL)
+		exit(2);
+	printf("1\n");
+	//manage later;
+	result->mlx_data.bit_addr = mlx_get_data_addr(result->mlx_data.img, &result->mlx_data.bpp, &result->mlx_data.line_len, &result->mlx_data.endian);
+	if (result->mlx_data.bit_addr == NULL)
+		exit(3);
+	printf("1\n");
+	//manage later;
+	printf("sprite initialized\n");
+	return (result);
 }
 
 void	player_init(t_player *player, t_map map, t_program *program)
@@ -180,10 +210,10 @@ void	ray_init(t_ray *ray, t_player *player, double angle, t_program *program)
 
 int	program_close(t_program *program, int status)
 {
-	mlx_destroy_image(program->mlx, program->img);
-	mlx_destroy_window(program->mlx, program->win);
-	mlx_destroy_display(program->mlx);
-	free(program->mlx);
+	mlx_destroy_image(program->mlx_data.mlx, program->mlx_data.img);
+	mlx_destroy_window(program->mlx_data.mlx, program->mlx_data.win);
+	mlx_destroy_display(program->mlx_data.mlx);
+	free(program->mlx_data.mlx);
 	destroy_map(program->map);
 	exit(status);
 	return (status);

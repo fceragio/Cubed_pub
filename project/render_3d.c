@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:22:10 by federico          #+#    #+#             */
-/*   Updated: 2025/07/01 17:34:25 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:49:40 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,58 +48,112 @@ static void	render_floor(t_program *program)
 	}
 }
 
-int	get_north_wall_color(t_map *map, int i, int len)
+static int	get_texture_color(int x, int y, t_sprite texture)
 {
-	return (0x00000000);
-}
-int	get_south_wall_color(t_map *map, int i, int len)
-{
-	return (0x00FFFFFFFF);
-}
-int	get_west_wall_color(t_map *map, int i, int len)
-{
-	return (0x00696969);
-}
-int	get_east_wall_color(t_map *map, int i, int len)
-{
-	return (0x00969696);
+	char	*pixel;
+
+	if (x < 0 || x >= texture.width || y < 0 || y >= texture.height)
+		return (ERROR_COLOR);
+	pixel = texture.mlx_data.bit_addr + (y * texture.mlx_data.line_len + x * texture.mlx_data.bpp / 8);
+	return (*(int *)pixel);
 }
 
-static int	get_wall_color(t_map *map, int wall_side, int i, int len)
+int	get_north_wall_color(t_map *map, t_ray ray, t_point pixel, int y_len)
 {
-	if (wall_side == NORTH)
-		return (get_north_wall_color(map, i, len));
-	else if (wall_side == SOUTH)
-		return (get_south_wall_color(map, i, len));
-	else if (wall_side == WEST)
-		return (get_west_wall_color(map, i, len));
-	else if (wall_side == EAST)
-		return (get_east_wall_color(map, i, len));
+	int	wall_x;
+	int	wall_y;
+	int	y_start;
+	int	color;
+
+	wall_x = (int)ray.hit_x % TILE_SIZE;
+	wall_x = (wall_x * map->north_wall_texture->width) / TILE_SIZE;
+	y_start = WIN_HEIGHT / 2 - y_len / 2;
+	wall_y = ((pixel.y - y_start) * map->north_wall_texture->height) / y_len;
+	color = get_texture_color(wall_x, wall_y, *map->north_wall_texture);
+	return (color);
+}
+int	get_south_wall_color(t_map *map, t_ray ray, t_point pixel, int y_len)
+{
+	int	wall_x;
+	int	wall_y;
+	int	y_start;
+	int	color;
+
+	wall_x = (int)ray.hit_x % TILE_SIZE;
+	wall_x = (wall_x * map->south_wall_texture->width) / TILE_SIZE;
+	y_start = WIN_HEIGHT / 2 - y_len / 2;
+	wall_y = ((pixel.y - y_start) * map->south_wall_texture->height) / y_len;
+	color = get_texture_color(wall_x, wall_y, *map->south_wall_texture);
+	return (color);
+}
+int	get_west_wall_color(t_map *map, t_ray ray, t_point pixel, int y_len)
+{
+	int	wall_x;
+	int	wall_y;
+	int	y_start;
+	int	color;
+
+	wall_x = (int)ray.hit_y % TILE_SIZE;
+	wall_x = (wall_x * map->west_wall_texture->width) / TILE_SIZE;
+	y_start = WIN_HEIGHT / 2 - y_len / 2;
+	wall_y = ((pixel.y - y_start) * map->west_wall_texture->height) / y_len;
+	color = get_texture_color(wall_x, wall_y, *map->west_wall_texture);
+	return (color);
+}
+int	get_east_wall_color(t_map *map, t_ray ray, t_point pixel, int y_len)
+{
+	int	wall_x;
+	int	wall_y;
+	int	y_start;
+	int color;
+
+	wall_x = (int)ray.hit_y % TILE_SIZE;
+	wall_x = (wall_x * map->east_wall_texture->width) / TILE_SIZE;
+	y_start = WIN_HEIGHT / 2 - y_len / 2;
+	wall_y = ((pixel.y - y_start) * map->east_wall_texture->height) / y_len;
+	color = get_texture_color(wall_x, wall_y, *map->east_wall_texture);
+	return (color);
+}
+
+static int	get_wall_color(t_map *map, t_ray ray, t_point pixel, int y_len)
+{
+	if (ray.wall_side == NORTH)
+		return (get_north_wall_color(map, ray, pixel, y_len));
+	else if (ray.wall_side == SOUTH)
+		return (get_south_wall_color(map, ray, pixel, y_len));
+	else if (ray.wall_side == WEST)
+		return (get_west_wall_color(map, ray, pixel, y_len));
+	else if (ray.wall_side == EAST)
+		return (get_east_wall_color(map, ray, pixel, y_len));
 	return (FAILURE);
 }
 
-static void	put_ray_pixels(int x, int i, t_program *program)
+static void	put_ray_pixels(t_point pixel, t_program *program)
 {
 	int	y;
 	int	y_start;
 	int	y_end;
 	int	color;
+	int	i;
 
-	y_start = (WIN_HEIGHT / 2) - (WALL_SIZE / program->player->fov[i].distance);
-	y_end = (WIN_HEIGHT / 2) + (WALL_SIZE / program->player->fov[i].distance);
+	i = pixel.y;
+	y_start = (WIN_HEIGHT / 2) - (WALL_SIZE / program->player->fov[i].distance) / 2;
+	y_end = (WIN_HEIGHT / 2) + (WALL_SIZE / program->player->fov[i].distance) / 2;
 	y = y_start;
 	while (y <= y_end)
 	{
-		color = get_wall_color(program->map, program->player->fov[i].wall_side, y, y_end - y_start);
-		put_pixel(program, x, y, color);
+		pixel.y = y;
+		color = get_wall_color(program->map, program->player->fov[i], pixel, y_end - y_start);
+		put_pixel(program, pixel.x, pixel.y, color);
 		y++;
 	}
 }
 
 static void	render_walls(t_program *program)
 {
-	int	i;
-	int	x;
+	t_point	pixel;
+			int	i;
+			int	x;
 
 	i = 0;
 	while (i <= NUM_RAYS)
@@ -107,7 +161,9 @@ static void	render_walls(t_program *program)
 		x = WID_RAYS * i;
 		while (x <= (WID_RAYS * (i + 1)))
 		{
-			put_ray_pixels(x, i, program);
+			pixel.x = x;
+			pixel.y = i;
+			put_ray_pixels(pixel, program);
 			x++;
 		}
 		i++;

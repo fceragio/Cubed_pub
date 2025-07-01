@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:05:06 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 01:20:00 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:27:09 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	hook_handlers(t_program *program)
 {
-	mlx_hook(program->win, DestroyNotify, StructureNotifyMask, red_x_press_handling, program);
-	mlx_hook(program->win, VisibilityNotify, VisibilityChangeMask, visibility_handling, program);
-	mlx_hook(program->win, KeyPress, KeyPressMask, key_press_handling, program);
-	mlx_hook(program->win, KeyRelease, KeyReleaseMask, key_release_handling, program);
+	mlx_hook(program->mlx_data.win, DestroyNotify, StructureNotifyMask, red_x_press_handling, program);
+	mlx_hook(program->mlx_data.win, VisibilityNotify, VisibilityChangeMask, visibility_handling, program);
+	mlx_hook(program->mlx_data.win, KeyPress, KeyPressMask, key_press_handling, program);
+	mlx_hook(program->mlx_data.win, KeyRelease, KeyReleaseMask, key_release_handling, program);
 }
 
 int	red_x_press_handling(t_program *program)
