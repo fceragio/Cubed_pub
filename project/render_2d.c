@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:23:59 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 02:08:31 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:42:28 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ static void	render_2d_map(t_map *map, t_program *program)
 
 	reset_2d(program);
 	x = 0;
-	while (x < map->dimension)
+	while (x < map->x_dimension)
 	{
 		y = 0;
-		while (y < map->dimension)
+		while (y < map->y_dimension)
 		{
 			if (map->arr[y][x] == 1)
 				put_wall_2d(x, y, program);

@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 22:21:34 by federico          #+#    #+#             */
-/*   Updated: 2025/06/29 02:53:42 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:41:55 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int	not_wall(int x, int y, t_program *program)
 {
 	int	**arr;
-	int	limit;
+	int	x_limit;
+	int	y_limit;
 
-	limit = program->map->dimension;
-	if (x < 0 || x >= limit || y < 0 || y >= limit)
+	x_limit = program->map->x_dimension;
+	y_limit = program->map->y_dimension;
+	if (x < 0 || x >= x_limit || y < 0 || y >= y_limit)
 		return (0);
 	arr = program->map->arr;
 	if (arr[y][x] == 1)
@@ -86,7 +88,7 @@ double	find_vertical_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_progra
 	set_vertical_base(&x, &y, ray);
 	step_x = ray->step_x * 1.0;
 	step_y = step_x * (ray->dir_y / ray->dir_x);
-	while (x >= 0 && x < map->dimension && y >= 0 && y < map->dimension)
+	while (x >= 0 && x < map->x_dimension && y >= 0 && y < map->y_dimension)
 	{
 		set_vertical_map(&map_x, x, ray);
 		map_y = (int)y;
@@ -138,7 +140,7 @@ double	find_horizontal_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_prog
 	set_horizontal_base(&x, &y, ray);
 	step_y = ray->step_y * 1.0;
 	step_x = step_y * (ray->dir_x / ray->dir_y);
-	while (x >= 0 && x < map->dimension && y >= 0 && y < map->dimension)
+	while (x >= 0 && x < map->x_dimension && y >= 0 && y < map->y_dimension)
 	{
 		set_horizontal_map(&map_y, y, ray);
 		map_x = (int)(x);

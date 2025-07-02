@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/02 19:29:35 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:45:00 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ typedef struct s_sprite
 typedef struct s_map
 {
 	int			**arr;
-	int			dimension;
+	int			x_dimension;
+	int			y_dimension;
 	int			sealing_color;
 	int			floor_color;
 	t_sprite	*north_wall_texture;

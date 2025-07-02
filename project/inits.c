@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/07/02 19:22:24 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:43:46 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ void	map_init(t_map *map, t_mlx_data *mlx_data)
 {
 	map->floor_color = FLOOR;
 	map->sealing_color = SEALING;
-	map->dimension = 13;
-	map->arr = malloc(sizeof(int *) * map->dimension);
+	map->x_dimension = 13;
+	map->y_dimension = 10;
+	map->arr = malloc(sizeof(int *) * map->y_dimension);
 
 	int	i;
 	int	j;
-	int	temp[13][13] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//, 1, 1, 1},
+	int	temp[10][13] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//, 1, 1, 1},
 						{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},//, 0, 0, 1},
 						{1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
 						{1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1},//, 0, 0, 1},
@@ -70,24 +71,24 @@ void	map_init(t_map *map, t_mlx_data *mlx_data)
 						{1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
 						{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},//, 1, 1, 1},
 						{1, 0, 1, 1, 0, 0, 0, EAST, 0, 0, 0, 1},//, 1, 1, 1, 1},
-						{1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1},//, 1, 1, 1},
-						{1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1},//, 1, 1, 1},
-						{1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0},//, 0, 0, 1},
-						{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};//, 1, 0, 1},
+						{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};//, 1, 1, 1},
+						// {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1}, 1, 1, 1},
+						// {1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0}, 0, 0, 1},
+						// {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 1, 0, 1},
 						// {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1},
 						// {1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
 						// {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},};
 	i = 0;
-	while (i < map->dimension)
+	while (i < map->y_dimension)
 	{
-		map->arr[i] = malloc(sizeof(int) * map->dimension);
+		map->arr[i] = malloc(sizeof(int) * map->x_dimension);
 		i++;
 	}
 	i = 0;
-	while (i < map->dimension)
+	while (i < map->y_dimension)
 	{
 		j = 0;
-		while (j < map->dimension)
+		while (j < map->x_dimension)
 		{
 			map->arr[i][j] = temp[i][j];
 			j++;
@@ -132,10 +133,10 @@ void	player_init(t_player *player, t_map map, t_program *program)
 	int	y;
 
 	y = 0;
-	while (y < map.dimension)
+	while (y < map.y_dimension)
 	{
 		x = 0;
-		while (x < map.dimension)
+		while (x < map.x_dimension)
 		{
 			if (map.arr[y][x] != 0 && map.arr[y][x] != 1)
 			{
@@ -214,7 +215,7 @@ void	destroy_map(t_map *map)
 	if (!map || !map->arr)
 		return ;
 	i = 0;
-	while (i < map->dimension)
+	while (i < map->y_dimension)
 	{
 		free(map->arr[i]);
 		i++;
