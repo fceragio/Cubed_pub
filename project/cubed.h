@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/02 16:48:02 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:29:35 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,28 @@ to avoid skipping colums, also WIN_WIDTH has to be a multiple of NUM_RAYS;
 so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 */
 
-# define DEBUG_MODE 0
 # define EPSILON 0.0001
-# define WIN_WIDTH	2064
+# define BASE 43
+# define WID_BASE (15 * 3)
+# define RESOLUTION_1 (43)
+# define RESOLUTION_2 (15)
+# define RESOLUTION_3 (3)
+# define WIN_WIDTH (WID_BASE * BASE)
 # define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)
 # define TILE_SIZE 64
-# define WALL_SIZE 512
+
+# define DEBUG_MODE 0
+# define RESOLUTION RESOLUTION_2
+# define WALL_SIZE (WIN_WIDTH / 2)
+# define NUM_RAYS (WIN_WIDTH / RESOLUTION)
+# define WID_RAYS (WIN_WIDTH / NUM_RAYS)
 # define U_SEC 1000000
 # define FPS 20
 # define U_FPS (U_SEC / FPS)
 # define SPEED 0.05
 # define SENSITIVITY (M_PI / 64.0)
 # define FOV (M_PI / 2.5)
-# define NUM_RAYS (WIN_WIDTH / 16)
-# define WID_RAYS (WIN_WIDTH / NUM_RAYS)
+
 # define MLX_DEFAULT 0
 # define SUCCESS 0
 # define FAILURE 1
