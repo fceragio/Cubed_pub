@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:09 by federico          #+#    #+#             */
-/*   Updated: 2025/07/01 19:34:03 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:38:21 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ the map will always be formatted as a square, adding colums or lines of SPACEs w
 this to semplify the logic.
 */
 
-int main()
+int main(int argc, char **argv)
 {
 	t_map		map;
 	t_player	player;
 	t_program	program;
 
-	program_init(&program, &map, &player);
-	rendering(&program);
+	printf("parsing->%p\n", parsing(argc, argv[1]));
+	// program_init(&program, &map, &player);
+	// rendering(&program);
 
 	return (1);
 }

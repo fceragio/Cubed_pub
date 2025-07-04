@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/07/02 19:43:46 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:17:42 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	map_init(t_map *map, t_mlx_data *mlx_data)
 						{1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1},//, 1, 0, 1},
 						{1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
 						{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},//, 1, 1, 1},
-						{1, 0, 1, 1, 0, 0, 0, EAST, 0, 0, 0, 1},//, 1, 1, 1, 1},
+						{1, 0, 1, 1, 0, 0, 0, EAST, 0, 0, 0, 1},//, 1, 1, 1},
 						{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};//, 1, 1, 1},
 						// {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1}, 1, 1, 1},
 						// {1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0}, 0, 0, 1},
@@ -103,27 +103,22 @@ void	map_init(t_map *map, t_mlx_data *mlx_data)
 
 t_sprite	*sprite_init(void *mlx, char *path)
 {
-	printf("initializing sprite\n");
 	t_sprite	*result;
 
 	result = malloc(sizeof(t_sprite));
 	if (result == NULL)
 		exit(1);
 	//remember to manage later;
-	printf("1\n");
 	result->mlx_data.mlx = NULL;
 	result->mlx_data.win = NULL;
 	result->mlx_data.img = mlx_xpm_file_to_image(mlx, path, &result->width, &result->height);
 	if (result->mlx_data.img == NULL)
 		exit(2);
-	printf("1\n");
 	//manage later;
 	result->mlx_data.bit_addr = mlx_get_data_addr(result->mlx_data.img, &result->mlx_data.bpp, &result->mlx_data.line_len, &result->mlx_data.endian);
 	if (result->mlx_data.bit_addr == NULL)
 		exit(3);
-	printf("1\n");
 	//manage later;
-	printf("sprite initialized\n");
 	return (result);
 }
 

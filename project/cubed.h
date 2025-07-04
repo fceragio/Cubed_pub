@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/02 19:45:00 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/05 03:06:57 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <math.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <fcntl.h>
 
 /*
 for now NUM_RAYS has to be an odd number to alline perfectly with player->aim;
@@ -38,6 +39,7 @@ so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 # define WIN_WIDTH (WID_BASE * BASE)
 # define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)
 # define TILE_SIZE 64
+# define BUFFER_SIZE 64
 
 # define DEBUG_MODE 0
 # define RESOLUTION RESOLUTION_2
@@ -69,7 +71,17 @@ so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 # define SOUTH 8
 # define EAST 7
 # define WEST 6
-# define SPACE 42
+
+# define M_SPACE 42
+# define M_NO 101
+# define M_SO 102
+# define M_WE 103
+# define M_EA 104
+# define M_C 105
+# define M_F 106
+# define M_MAP 107
+# define M_SKIP 108
+# define M_ERR 109
 
 typedef struct s_mlx_data
 {
@@ -133,6 +145,29 @@ typedef struct s_map
 	t_sprite	*east_wall_texture;
 }	t_map;
 
+typedef struct s_list
+{
+	char			*content;
+	struct s_list	*next;
+}				t_list;
+
+typedef struct s_map_blueprint
+{
+	bool	No_flag;
+	bool	So_flag;
+	bool	We_flag;
+	bool	Ea_flag;
+	bool	C_flag;
+	bool	F_flag;
+	char	*No;
+	char	*So;
+	char	*We;
+	char	*Ea;
+	char	*C;
+	char	*F;
+	t_list	*map_list;
+}	t_map_blueprint;
+
 typedef struct s_commands
 {
 	bool	w;
@@ -150,6 +185,18 @@ typedef struct s_program
 	t_player	*player;
 	t_commands	commands;
 }	t_program;
+
+char	*get_next_line(int fd);
+void	create_list_till_newl(t_list **list, int fd);
+void	add_node(t_list **list, char *buffer);
+int		new_line(t_list *list);
+t_list	*find_last(t_list *list);
+char	*concatenate_lines(t_list	*list);
+void	cleanup(t_list **list);
+void	freeall_save_leftover(t_list **list, t_list *new_list, char	*leftover);
+size_t	chars_to_newl(t_list *list);
+void	cat_nodes(t_list *list, char *next_line);
+
 
 double		safe_cos(double	angle);
 double		safe_sin(double angle);
@@ -196,5 +243,13 @@ int			not_wall(int x, int y, t_program *program);
 int			find_wall_distance(double *distance, t_ray *ray, t_map *map, t_program *program);
 double		find_vertical_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_program *program);
 double		find_horizontal_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_program *program);
+
+int			str_len(char *str);
+void		print_str(char *str);
+void		print_error(char *str);
+
+t_map		*parsing(int argc, char *file_path);
+
+void		clear_blueprint(t_map_blueprint *blueprint);
 
 #endif

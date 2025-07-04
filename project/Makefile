@@ -13,7 +13,10 @@ SRCS = main.c \
 		math_utils.c \
 		render_utils.c \
 		render_2d.c \
-		render_3d.c
+		render_3d.c \
+		print_utils.c \
+		parsing.c \
+		get_next_line.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)
