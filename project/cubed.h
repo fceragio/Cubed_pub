@@ -166,6 +166,8 @@ typedef struct s_map_blueprint
 	char	*C;
 	char	*F;
 	t_list	*map_list;
+	char	**char_map;
+	int		char_map_len;
 }	t_map_blueprint;
 
 typedef struct s_commands
@@ -250,6 +252,9 @@ void		print_error(char *str);
 
 t_map		*parsing(int argc, char *file_path);
 
-void		clear_blueprint(t_map_blueprint *blueprint);
+void		clear_blueprint(t_map_blueprint **blueprint);
+
+t_list		*list_last(t_list *list);
+void		list_append(char *content, t_list **list);
 
 #endif

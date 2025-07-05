@@ -23,9 +23,9 @@ int main(int argc, char **argv)
 	t_player	player;
 	t_program	program;
 
-	printf("parsing->%p\n", parsing(argc, argv[1]));
-	// program_init(&program, &map, &player);
-	// rendering(&program);
+	// printf("parsing->%p\n", parsing(argc, argv[1]));
+	program_init(&program, &map, &player);
+	rendering(&program);
 
 	return (1);
 }
