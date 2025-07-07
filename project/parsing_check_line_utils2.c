@@ -6,9 +6,79 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:36 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 15:25:06 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:51:23 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
+static int	check_until_first_comma(int *i, char *line)
+{
+	if (line[*i] != ' ' && line[*i] != '\t')
+		return (M_ERR);
+	while (line[*i] == ' ' || line[*i] == '\t')
+		(*i)++;
+	if (line[*i] == '\n' || line[*i] == '\0' || line[*i] < '0' || line[*i] > '9')
+		return (M_ERR);
+	while (line[*i] >= '0' && line[*i] <= '9')
+		(*i)++;
+	if (line[*i] != ',')
+		return (M_ERR);
+	while (line[*i] == ' ' || line[*i] == '\t')
+		(*i)++;
+	return (SUCCESS);
+}
+
+static int	check_until_second_comma(int *i, char *line)
+{
+	if (check_until_first_comma(i, line) == M_ERR)
+		return (M_ERR);
+	(*i)++;
+	if (line[*i] == '\n' || line[*i] == '\0' || line[*i] < '0' || line[*i] > '9')
+		return (M_ERR);
+	while (line[*i] >= '0' && line[*i] <= '9')
+		(*i)++;
+	if (line[*i] != ',')
+		return (M_ERR);
+	while (line[*i] == ' ' || line[*i] == '\t')
+		(*i)++;
+	return (SUCCESS);
+}
+
+int	check_C_line(char *line)
+{
+	int	i;
+
+	i = 1;
+	if (check_until_second_comma(&i, line) == M_ERR)
+		return (M_ERR);
+	i++;
+	if (line[i] == '\n' || line[i] == '\0' || line[i] < '0' || line[i] > '9')
+		return (M_ERR);
+	while (line[i] >= '0' && line[i] <= '9')
+		i++;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	if (line[i] != '\n' && line[i] != '\0')
+		return (M_ERR);
+	return (M_C);
+}
+
+int	check_F_line(char *line)
+{
+	int	i;
+
+	i = 1;
+	if (check_until_second_comma(&i, line) == M_ERR)
+		return (M_ERR);
+	i++;
+	if (line[i] == '\n' || line[i] == '\0' || line[i] < '0' || line[i] > '9')
+		return (M_ERR);
+	while (line[i] >= '0' && line[i] <= '9')
+		i++;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	if (line[i] != '\n' && line[i] != '\0')
+		return (M_ERR);
+	return (M_F);
+}

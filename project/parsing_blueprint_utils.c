@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:39:38 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 14:41:21 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:09:13 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ void	blueprint_init(t_map_blueprint *blueprint)
 	blueprint->Ea = NULL;
 	blueprint->C = NULL;
 	blueprint->F = NULL;
+	blueprint->split_C = NULL;
+	blueprint->split_F = NULL;
 	blueprint->map_list = NULL;
 	blueprint->char_map = NULL;
 	blueprint->x_len = 0;
 	blueprint->y_len = 0;
 }
 
-void	clear_char_map(char **char_map)
+void	clear_char_matrix(char **char_map)
 {
 	int	i;
 
@@ -41,10 +43,12 @@ void	clear_char_map(char **char_map)
 	i = 0;
 	while (char_map[i])
 	{
+		printf("%s\n", char_map[i]);
 		free(char_map[i]);
 		i++;
 	}
 	free(char_map);
+	printf("\n");
 }
 
 void	clear_blueprint(t_map_blueprint **blueprint)
@@ -69,7 +73,9 @@ void	clear_blueprint(t_map_blueprint **blueprint)
 		free((*blueprint)->map_list);
 		(*blueprint)->map_list = temp;
 	}
-	clear_char_map((*blueprint)->char_map);
+	clear_char_matrix((*blueprint)->char_map);
+	clear_char_matrix((*blueprint)->split_C);
+	clear_char_matrix((*blueprint)->split_F);
 	free(*blueprint);
 	(*blueprint) = NULL;
 }

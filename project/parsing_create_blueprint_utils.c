@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:44:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 15:25:24 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:50:46 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	identify_line(char *line)
 	if (line[i] == '\n' || line[i] == '\0')
 		return (M_SKIP);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
-		return (M_C);
+		return (check_C_line(line + i));
 	else if (line[i] == 'F' && line[i + 1] == ' ')
-		return (M_F);
+		return (check_F_line(line + i));
 	else if (line[i] == 'N' && line[i + 1] == 'O')
 		return (check_N_line(line + i));
 	else if (line[i] == 'S' && line[i + 1] == 'O')
