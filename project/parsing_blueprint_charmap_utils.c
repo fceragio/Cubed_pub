@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:03:13 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 15:04:34 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/07 21:42:11 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	spawns_ok(t_map_blueprint *blueprint)
 int	flood_fill(t_map_blueprint *blueprint, char **map, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= blueprint->x_len || y >= blueprint->y_len)
-		return (FAILURE);
+		return (NOT_OK);
 	if (map[y][x] == '\0')
-		return (FAILURE);
+		return (NOT_OK);
 	if (map[y][x] == '1')
-		return (SUCCESS);
+		return (OK);
 	if (map[y][x] == 'v')
-		return (SUCCESS);
+		return (OK);
 	map[y][x] = 'v';
 	return (flood_fill(blueprint, map, x + 1, y)
 			&& flood_fill(blueprint, map, x - 1, y)
@@ -67,7 +67,7 @@ int	map_is_closed(t_map_blueprint *blueprint)
 	int	spawn_y;
 
 	if (blueprint == NULL || blueprint->char_map == NULL)
-		return (FAILURE);
+		return (NOT_OK);
 	spawn_y = 0;
 	while (blueprint->char_map[spawn_y])
 	{
@@ -83,7 +83,7 @@ int	map_is_closed(t_map_blueprint *blueprint)
 		}
 		spawn_y++;
 	}
-	return (FAILURE);
+	return (NOT_OK);
 }
 
 int	blueprint_map_ok(t_map_blueprint *blueprint)
@@ -93,7 +93,7 @@ int	blueprint_map_ok(t_map_blueprint *blueprint)
 		print_error("Error\nWrong number of spawn points in the map\n");
 		return (FAILURE);
 	}
-	if (map_is_closed(blueprint) == FAILURE)
+	if (map_is_closed(blueprint) == NOT_OK)
 	{
 		print_error("Error\nMap is not properly closed by walls\n");
 		return (FAILURE);

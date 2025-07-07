@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:50:14 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 15:19:06 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/08 02:09:36 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,16 @@ size_t	chars_to_newl(t_list *list)
 		list = list->next;
 	}
 	return (total_len);
+}
+
+void	clear_nextlines(int fd)
+{
+	char	*next_line;
+
+	next_line = get_next_line(fd);
+	while (next_line)
+	{
+		free(next_line);
+		next_line = get_next_line(fd);
+	}
 }

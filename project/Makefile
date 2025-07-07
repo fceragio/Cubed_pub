@@ -20,6 +20,8 @@ SRCS = main.c \
 		parsing_assign_line_utils2.c \
 		parsing_blueprint_charmap.c \
 		parsing_blueprint_charmap_utils.c \
+		parsing_blueprint_prepare_fields.c \
+		parsing_blueprint_prepare_fields_utils.c \
 		parsing_blueprint_utils.c \
 		parsing_check_file.c \
 		parsing_check_line_utils1.c \

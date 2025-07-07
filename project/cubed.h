@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 18:38:18 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/08 02:26:32 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 # define MLX_DEFAULT 0
 # define SUCCESS 0
 # define FAILURE 1
+# define OK 123
+# define NOT_OK 0
 # define MALLOC_ERR 4
 # define MLX_ERR 5
 # define BLACK 0x00000000
@@ -257,11 +259,11 @@ void		print_error(char *str);
 
 
 
-t_map		*parsing(int argc, char *file_path);
-t_map		*create_map(t_map_blueprint **blueprint);
+t_map		*parsing(int argc, char *file_path, void *mlx);
+t_map		*create_map(t_map_blueprint **blueprint, void *mlx);
 void		create_map_blueprint(t_map_blueprint **blueprint, int fd);
 int			blueprint_ok(t_map_blueprint *blueprint);
-t_map		*blueprint_to_map(t_map_blueprint *blueprint);
+t_map		*blueprint_to_map(t_map_blueprint *blueprint, void *mlx);
 
 t_list		*list_last(t_list *list);
 void		list_append(char *content, t_list **list);
@@ -283,6 +285,7 @@ void		create_list_till_newl(t_list **list, int fd);
 char		*concatenate_lines(t_list	*list);
 void		cat_nodes(t_list *list, char *next_line);
 size_t		chars_to_newl(t_list *list);
+void		clear_nextlines(int fd);
 
 int			check_N_line(char *line);
 int			check_S_line(char *line);
@@ -318,5 +321,13 @@ int			assign_line_EA(char *line, t_map_blueprint *blueprint);
 
 
 void		blueprint_prepare_fields(t_map_blueprint *blueprint);
+int			trimmed_len(char *to_trim);
+void		copy_only_second_string(char *to_copy, char *buffer);
+char		*keep_only_second_string(char *to_trim);
+int			find_next_number(char *str, int start);
+int			measure_number(char *str, int start);
+void		copy_number(char *to_copy, int *start, char *buffer);
+char		**split_second_string_commas(char *to_split);
+
 
 #endif
