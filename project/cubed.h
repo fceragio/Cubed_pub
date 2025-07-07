@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/05 03:06:57 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:27:05 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,8 @@ typedef struct s_map_blueprint
 	char	*F;
 	t_list	*map_list;
 	char	**char_map;
-	int		char_map_len;
+	int		x_len;
+	int		y_len;
 }	t_map_blueprint;
 
 typedef struct s_commands
@@ -251,10 +252,61 @@ void		print_str(char *str);
 void		print_error(char *str);
 
 t_map		*parsing(int argc, char *file_path);
+t_map	*create_map(t_map_blueprint **blueprint);
+void	create_map_blueprint(t_map_blueprint **blueprint, int fd);
+int	blueprint_ok(t_map_blueprint *blueprint);
+t_map	*blueprint_to_map(t_map_blueprint *blueprint);
 
-void		clear_blueprint(t_map_blueprint **blueprint);
+t_list	*list_last(t_list *list);
+void	list_append(char *content, t_list **list);
+int	list_len(t_list *list);
+int	content_max_len(t_list *list);
 
-t_list		*list_last(t_list *list);
-void		list_append(char *content, t_list **list);
+int	identify_line(char *line);
+int	assign_line(char *line, t_map_blueprint *blueprint);
+int	check_map_line(char *line);
+int	assign_map_line(char *line, t_map_blueprint *blueprint);
+char	*get_next_line(int fd);
+
+void	add_node(t_list **list, char *buffer);
+int	new_line(t_list *list);
+t_list	*find_last(t_list *list);
+void	cleanup(t_list **list);
+void	freeall_save_leftover(t_list **list, t_list *new_list, char	*leftover);
+void	create_list_till_newl(t_list **list, int fd);
+char	*concatenate_lines(t_list	*list);
+void	cat_nodes(t_list *list, char *next_line);
+size_t	chars_to_newl(t_list *list);
+
+int	check_N_line(char *line);
+int	check_S_line(char *line);
+int	check_W_line(char *line);
+int	check_E_line(char *line);
+
+
+bool	check_file_name(char *file_path);
+bool	check_file_access(char *file_path);
+bool	cub_file_is_ok(int argc, char *file_path);
+
+void	blueprint_init(t_map_blueprint *blueprint);
+void	clear_char_map(char **char_map);
+void	clear_blueprint(t_map_blueprint **blueprint);
+
+void	create_char_map(t_map_blueprint *blueprint);
+void	zero_char_map(t_map_blueprint *blueprint);
+void	malloc_char_map(t_map_blueprint *blueprint);
+void	set_char_map(t_map_blueprint *blueprint);
+
+int	spawns_ok(t_map_blueprint *blueprint);
+int	flood_fill(t_map_blueprint *blueprint, char **map, int x, int y);
+int	map_is_closed(t_map_blueprint *blueprint);
+int	blueprint_map_ok(t_map_blueprint *blueprint);
+
+int	assign_line_C(char *line, t_map_blueprint *blueprint);
+int	assign_line_F(char *line, t_map_blueprint *blueprint);
+int	assign_line_NO(char *line, t_map_blueprint *blueprint);
+int	assign_line_SO(char *line, t_map_blueprint *blueprint);
+int	assign_line_WE(char *line, t_map_blueprint *blueprint);
+int	assign_line_EA(char *line, t_map_blueprint *blueprint);
 
 #endif

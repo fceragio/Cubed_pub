@@ -16,7 +16,18 @@ SRCS = main.c \
 		render_3d.c \
 		print_utils.c \
 		parsing.c \
-		get_next_line.c
+		parsing_assign_line_utils1.c \
+		parsing_assign_line_utils2.c \
+		parsing_blueprint_charmap.c \
+		parsing_blueprint_charmap_utils.c \
+		parsing_blueprint_utils.c \
+		parsing_check_file.c \
+		parsing_check_line_utils1.c \
+		parsing_check_line_utils2.c \
+		parsing_create_blueprint_gnl1.c \
+		parsing_create_blueprint_gnl2.c \
+		parsing_create_blueprint_utils.c \
+		parsing_list_utils.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)

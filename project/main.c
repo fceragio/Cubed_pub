@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:09 by federico          #+#    #+#             */
-/*   Updated: 2025/07/04 18:38:21 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/06 15:43:43 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int main(int argc, char **argv)
 	t_player	player;
 	t_program	program;
 
-	// printf("parsing->%p\n", parsing(argc, argv[1]));
-	program_init(&program, &map, &player);
-	rendering(&program);
+	printf("parsing->%p\n", parsing(argc, argv[1]));
+	// program_init(&program, &map, &player);
+	// rendering(&program);
 
 	return (1);
 }
