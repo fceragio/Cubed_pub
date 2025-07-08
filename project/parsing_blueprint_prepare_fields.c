@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 21:48:01 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 21:51:16 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 00:31:32 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	blueprint_prepare_fields(t_map_blueprint *blueprint)
 {
-	printf("preparing fields\n");
 	blueprint->No = keep_only_second_string(blueprint->No);
 	blueprint->So = keep_only_second_string(blueprint->So);
 	blueprint->We = keep_only_second_string(blueprint->We);

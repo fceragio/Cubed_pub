@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 17:31:29 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 00:42:56 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 
-/*
-for now NUM_RAYS has to be an odd number to alline perfectly with player->aim;
-to avoid skipping colums, also WIN_WIDTH has to be a multiple of NUM_RAYS;
-so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
-*/
+# define DEBUG_MODE 1
 
 # define EPSILON 0.0001
 # define BASE 43
@@ -41,7 +37,6 @@ so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 # define TILE_SIZE 32
 # define BUFFER_SIZE 64
 
-# define DEBUG_MODE 0
 # define RESOLUTION RESOLUTION_2
 # define WALL_SIZE (WIN_WIDTH / 2)
 # define NUM_RAYS (WIN_WIDTH / RESOLUTION)
@@ -168,6 +163,8 @@ typedef struct s_map_blueprint
 	char	*Ea;
 	char	*C;
 	char	*F;
+	int		C_vals[COLOR_VALUES];
+	int		F_vals[COLOR_VALUES];
 	char	**split_C;
 	char	**split_F;
 	t_list	*map_list;

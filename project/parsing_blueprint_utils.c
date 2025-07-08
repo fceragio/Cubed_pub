@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:39:38 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 02:13:10 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 00:21:00 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	clear_char_matrix(char **char_map)
 
 void	clear_blueprint(t_map_blueprint **blueprint)
 {
-	printf("clearing blueprint\n");
+	printf("\nclearing blueprint\n");
 	t_list	*temp;
 
 	if ((*blueprint) == NULL)

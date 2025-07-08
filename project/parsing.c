@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:24:23 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 16:54:26 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 00:38:35 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_map	*parsing(int argc, char *file_path, void *mlx)
 	}
 	fd = open(file_path, O_RDONLY, 0);
 	create_map_blueprint(&map_blueprint, fd);
-	printf("closing fd\n");
 	close(fd);
 	return (create_map(&map_blueprint, mlx));
 }
@@ -36,7 +35,6 @@ t_map	*create_map(t_map_blueprint **blueprint, void *mlx)
 {
 	t_map	*map;
 
-	printf("blueprint->%p\n", *blueprint);
 	if (*blueprint == NULL)
 		return (NULL);
 	if (blueprint_ok(*blueprint) == FAILURE)
@@ -79,9 +77,59 @@ void	create_map_blueprint(t_map_blueprint **blueprint, int fd)
 	}
 }
 
+
+
+
+int	string_to_int(char *str)
+{
+	printf("string-> %s\t", str);
+	int	i;
+	int	result;
+
+	if (str == NULL)
+		return (-1);
+	result = 0;
+	i = 0;
+	while (str[i])
+	{
+		result = result * 10 + (str[i] - '0');
+		if (result > 255)
+			return (-1);
+		i++;
+	}
+	printf("string to int-> %d\n", result);
+	return (result);
+}
+int	blueprint_F_C_colors(t_map_blueprint *blueprint)
+{
+	int	i;
+
+	i = 0;
+	while (i < COLOR_VALUES)
+	{
+		blueprint->C_vals[i] = string_to_int(blueprint->split_C[i]);
+		if (blueprint->C_vals[i] == -1)
+		{
+			print_error("Error\n");
+			print_error(blueprint->split_C[i]);
+			print_error(" is not a valid value for cealing color\n");
+			return (FAILURE);
+		}
+		blueprint->F_vals[i] = string_to_int(blueprint->split_F[i]);
+		if (blueprint->F_vals[i] == -1)
+		{
+			print_error("Error\n");
+			print_error(blueprint->split_F[i]);
+			print_error(" is not a valid value for floor color\n");
+			return (FAILURE);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
 int	blueprint_ok(t_map_blueprint *blueprint)
 {
-	printf("entering blueprint_ok\n");
+	printf("\nentering blueprint_ok\n");
 	if (blueprint->No_flag == false || blueprint->So_flag == false
 		|| blueprint->We_flag == false || blueprint->Ea_flag == false
 		|| blueprint->C_flag == false || blueprint->F_flag == false)
@@ -93,6 +141,8 @@ int	blueprint_ok(t_map_blueprint *blueprint)
 	if (blueprint_map_ok(blueprint) == FAILURE)
 		return (FAILURE);
 	blueprint_prepare_fields(blueprint);
+	if (blueprint_F_C_colors(blueprint) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -136,7 +186,7 @@ void	destroy_texture(t_sprite *sprite)
 }
 void	destroy_map(t_map *map)
 {
-	printf("destroy_map\n");
+	printf("\ndestroy_map\n");
 	int	i;
 
 	if (map == NULL)
@@ -149,7 +199,6 @@ void	destroy_map(t_map *map)
 	}
 	free(map->arr);
 	map->arr = NULL;
-	printf("destroy_map\n");
 	if (map->north_wall_texture)
 		destroy_texture(map->north_wall_texture);
 	map->north_wall_texture = NULL;
@@ -162,7 +211,6 @@ void	destroy_map(t_map *map)
 	if (map->east_wall_texture)
 		destroy_texture(map->east_wall_texture);
 	map->east_wall_texture = NULL;
-	printf("destroy_map\n");
 	free(map);
 }
 
@@ -194,7 +242,6 @@ int	sprite_init(t_sprite **result, void *mlx, char *path)
 	{
 		exit(MLX_ERR);
 	}
-	printf("sprite ok\n");
 	return (SUCCESS);
 }
 
@@ -273,9 +320,8 @@ void	set_map_array(t_map *map, t_map_blueprint *blueprint)
 
 int	set_map_colors(t_map *map, t_map_blueprint *blueprint)
 {
-	//yet to implement
-	map->sealing_color = SEALING;
-	map->floor_color = FLOOR;
+	map->sealing_color = (blueprint->C_vals[0] << 16) | (blueprint->C_vals[1] << 8) | blueprint->C_vals[2];
+	map->floor_color = (blueprint->F_vals[0] << 16) | (blueprint->F_vals[1] << 8) | blueprint->F_vals[2];
 	return (SUCCESS);
 }
 
@@ -286,7 +332,6 @@ t_map	*blueprint_to_map(t_map_blueprint *blueprint, void *mlx)
 	result = map_init();
 	if (set_map_textures(result, blueprint, mlx) == FAILURE)
 	{
-		printf("set_map_textures failed\n\n");
 		destroy_map(result);
 		return (NULL);
 	}
