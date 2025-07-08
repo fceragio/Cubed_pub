@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 16:42:25 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:31:29 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 # define RESOLUTION_3 (3)
 # define WIN_WIDTH (WID_BASE * BASE)
 # define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 # define BUFFER_SIZE 64
 
 # define DEBUG_MODE 0
@@ -211,12 +211,12 @@ double		safe_sin(double angle);
 double		safe_tan(double angle);
 void		safe_angle(double *angle);
 
-void		program_init(t_program *program, t_map *map, t_player *player);
+void		program_init(void *mlx, t_program *program, t_map *map, t_player *player);
 void		player_init(t_player *player, t_map map, t_program *program);
 void		commands_init(t_program *program);
 // void		map_init(t_map *map, t_mlx_data *mlx);
 int			sprite_init(t_sprite **result, void *mlx, char *path);
-void		vs_init(t_program *program);
+void		vs_init(void *mlx, t_program *program);
 int			program_close(t_program *program, int status);
 // void		destroy_map(t_map *map);
 void		player_aim_init(t_player *player, t_program *program);

@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:23:59 by federico          #+#    #+#             */
-/*   Updated: 2025/07/02 19:42:28 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:24:23 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ static void	reset_2d(t_program *program)
 	int	y;
 
 	x = 0;
-	while (x < WIN_WIDTH)
+	while (x < (program->map->x_dimension * TILE_SIZE))
 	{
 		y = 0;
-		while (y < WIN_HEIGHT)
+		while (y < (program->map->y_dimension * TILE_SIZE))
 		{
 			put_pixel(program, x, y, BLACK);
 			y++;
@@ -88,7 +88,7 @@ static void	render_2d_map(t_map *map, t_program *program)
 		{
 			if (map->arr[y][x] == 1)
 				put_wall_2d(x, y, program);
-			else
+			else if (map->arr[y][x] != M_SPACE)
 				put_empty_2d(x, y, program);
 			y++;
 		}

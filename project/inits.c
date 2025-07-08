@@ -6,20 +6,15 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 16:11:21 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:08:04 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-void	vs_init(t_program *program)
+void	vs_init(void *mlx, t_program *program)
 {
-	program->mlx_data.mlx = mlx_init();
-	if (!program->mlx_data.mlx)
-	{
-		destroy_map(program->map);
-		exit(MLX_ERR);
-	}
+	program->mlx_data.mlx = mlx;
 	program->mlx_data.win = mlx_new_window(program->mlx_data.mlx, WIN_WIDTH, WIN_HEIGHT, "Cubed");
 	if (!program->mlx_data.win)
 	{
@@ -52,55 +47,6 @@ void	commands_init(t_program *program)
 	program->commands.r_arrow = false;
 }
 
-// void	map_init(t_map *map, t_mlx_data *mlx_data)
-// {
-// 	map->floor_color = FLOOR;
-// 	map->sealing_color = SEALING;
-// 	map->x_dimension = 13;
-// 	map->y_dimension = 10;
-// 	map->arr = malloc(sizeof(int *) * map->y_dimension);
-
-// 	int	i;
-// 	int	j;
-// 	int	temp[10][13] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//, 1, 1, 1},
-// 						{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},//, 0, 0, 1},
-// 						{1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
-// 						{1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1},//, 0, 0, 1},
-// 						{1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1},//, 1, 0, 1},
-// 						{1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1},//, 1, 0, 1},
-// 						{1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
-// 						{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},//, 1, 1, 1},
-// 						{1, 0, 1, 1, 0, 0, 0, EAST, 0, 0, 0, 1},//, 1, 1, 1},
-// 						{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};//, 1, 1, 1},
-// 						// {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1}, 1, 1, 1},
-// 						// {1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0}, 0, 0, 1},
-// 						// {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 1, 0, 1},
-// 						// {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1},
-// 						// {1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-// 						// {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},};
-// 	i = 0;
-// 	while (i < map->y_dimension)
-// 	{
-// 		map->arr[i] = malloc(sizeof(int) * map->x_dimension);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (i < map->y_dimension)
-// 	{
-// 		j = 0;
-// 		while (j < map->x_dimension)
-// 		{
-// 			map->arr[i][j] = temp[i][j];
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	map->north_wall_texture = sprite_init(mlx_data->mlx, "../north.xpm");
-// 	map->south_wall_texture = sprite_init(mlx_data->mlx, "../south.xpm");
-// 	map->west_wall_texture = sprite_init(mlx_data->mlx, "../west.xpm");
-// 	map->east_wall_texture = sprite_init(mlx_data->mlx, "../east.xpm");
-// }
-
 void	player_init(t_player *player, t_map map, t_program *program)
 {
 	int	x;
@@ -112,7 +58,8 @@ void	player_init(t_player *player, t_map map, t_program *program)
 		x = 0;
 		while (x < map.x_dimension)
 		{
-			if (map.arr[y][x] != 0 && map.arr[y][x] != 1)
+			if (map.arr[y][x] == NORTH || map.arr[y][x] == SOUTH
+				|| map.arr[y][x] == WEST || map.arr[y][x] == EAST)
 			{
 				player->x = x + 0.5;
 				player->y = y + 0.5;
@@ -173,26 +120,11 @@ void	ray_init(t_ray *ray, t_player *player, double angle, t_program *program)
 
 int	program_close(t_program *program, int status)
 {
+	destroy_map(program->map);
 	mlx_destroy_image(program->mlx_data.mlx, program->mlx_data.img);
 	mlx_destroy_window(program->mlx_data.mlx, program->mlx_data.win);
 	mlx_destroy_display(program->mlx_data.mlx);
 	free(program->mlx_data.mlx);
-	destroy_map(program->map);
 	exit(status);
 	return (status);
 }
-
-// void	destroy_map(t_map *map)
-// {
-// 	int	i;
-
-// 	if (!map || !map->arr)
-// 		return ;
-// 	i = 0;
-// 	while (i < map->y_dimension)
-// 	{
-// 		free(map->arr[i]);
-// 		i++;
-// 	}
-// 	free(map->arr);
-// }
