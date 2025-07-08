@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/07/04 18:17:42 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:11:21 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,75 +52,54 @@ void	commands_init(t_program *program)
 	program->commands.r_arrow = false;
 }
 
-void	map_init(t_map *map, t_mlx_data *mlx_data)
-{
-	map->floor_color = FLOOR;
-	map->sealing_color = SEALING;
-	map->x_dimension = 13;
-	map->y_dimension = 10;
-	map->arr = malloc(sizeof(int *) * map->y_dimension);
+// void	map_init(t_map *map, t_mlx_data *mlx_data)
+// {
+// 	map->floor_color = FLOOR;
+// 	map->sealing_color = SEALING;
+// 	map->x_dimension = 13;
+// 	map->y_dimension = 10;
+// 	map->arr = malloc(sizeof(int *) * map->y_dimension);
 
-	int	i;
-	int	j;
-	int	temp[10][13] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//, 1, 1, 1},
-						{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},//, 0, 0, 1},
-						{1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
-						{1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1},//, 0, 0, 1},
-						{1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1},//, 1, 0, 1},
-						{1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1},//, 1, 0, 1},
-						{1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
-						{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},//, 1, 1, 1},
-						{1, 0, 1, 1, 0, 0, 0, EAST, 0, 0, 0, 1},//, 1, 1, 1},
-						{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};//, 1, 1, 1},
-						// {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1}, 1, 1, 1},
-						// {1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0}, 0, 0, 1},
-						// {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 1, 0, 1},
-						// {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1},
-						// {1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-						// {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},};
-	i = 0;
-	while (i < map->y_dimension)
-	{
-		map->arr[i] = malloc(sizeof(int) * map->x_dimension);
-		i++;
-	}
-	i = 0;
-	while (i < map->y_dimension)
-	{
-		j = 0;
-		while (j < map->x_dimension)
-		{
-			map->arr[i][j] = temp[i][j];
-			j++;
-		}
-		i++;
-	}
-	map->north_wall_texture = sprite_init(mlx_data->mlx, "../north.xpm");
-	map->south_wall_texture = sprite_init(mlx_data->mlx, "../south.xpm");
-	map->west_wall_texture = sprite_init(mlx_data->mlx, "../west.xpm");
-	map->east_wall_texture = sprite_init(mlx_data->mlx, "../east.xpm");
-}
-
-t_sprite	*sprite_init(void *mlx, char *path)
-{
-	t_sprite	*result;
-
-	result = malloc(sizeof(t_sprite));
-	if (result == NULL)
-		exit(1);
-	//remember to manage later;
-	result->mlx_data.mlx = NULL;
-	result->mlx_data.win = NULL;
-	result->mlx_data.img = mlx_xpm_file_to_image(mlx, path, &result->width, &result->height);
-	if (result->mlx_data.img == NULL)
-		exit(2);
-	//manage later;
-	result->mlx_data.bit_addr = mlx_get_data_addr(result->mlx_data.img, &result->mlx_data.bpp, &result->mlx_data.line_len, &result->mlx_data.endian);
-	if (result->mlx_data.bit_addr == NULL)
-		exit(3);
-	//manage later;
-	return (result);
-}
+// 	int	i;
+// 	int	j;
+// 	int	temp[10][13] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//, 1, 1, 1},
+// 						{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},//, 0, 0, 1},
+// 						{1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
+// 						{1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1},//, 0, 0, 1},
+// 						{1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1},//, 1, 0, 1},
+// 						{1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1},//, 1, 0, 1},
+// 						{1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1},//, 1, 0, 1},
+// 						{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},//, 1, 1, 1},
+// 						{1, 0, 1, 1, 0, 0, 0, EAST, 0, 0, 0, 1},//, 1, 1, 1},
+// 						{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};//, 1, 1, 1},
+// 						// {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1}, 1, 1, 1},
+// 						// {1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0}, 0, 0, 1},
+// 						// {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 1, 0, 1},
+// 						// {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1},
+// 						// {1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+// 						// {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},};
+// 	i = 0;
+// 	while (i < map->y_dimension)
+// 	{
+// 		map->arr[i] = malloc(sizeof(int) * map->x_dimension);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < map->y_dimension)
+// 	{
+// 		j = 0;
+// 		while (j < map->x_dimension)
+// 		{
+// 			map->arr[i][j] = temp[i][j];
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	map->north_wall_texture = sprite_init(mlx_data->mlx, "../north.xpm");
+// 	map->south_wall_texture = sprite_init(mlx_data->mlx, "../south.xpm");
+// 	map->west_wall_texture = sprite_init(mlx_data->mlx, "../west.xpm");
+// 	map->east_wall_texture = sprite_init(mlx_data->mlx, "../east.xpm");
+// }
 
 void	player_init(t_player *player, t_map map, t_program *program)
 {
@@ -203,17 +182,17 @@ int	program_close(t_program *program, int status)
 	return (status);
 }
 
-void	destroy_map(t_map *map)
-{
-	int	i;
+// void	destroy_map(t_map *map)
+// {
+// 	int	i;
 
-	if (!map || !map->arr)
-		return ;
-	i = 0;
-	while (i < map->y_dimension)
-	{
-		free(map->arr[i]);
-		i++;
-	}
-	free(map->arr);
-}
+// 	if (!map || !map->arr)
+// 		return ;
+// 	i = 0;
+// 	while (i < map->y_dimension)
+// 	{
+// 		free(map->arr[i]);
+// 		i++;
+// 	}
+// 	free(map->arr);
+// }

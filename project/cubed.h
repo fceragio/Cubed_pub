@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 02:26:32 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:42:25 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ so for now NUM_RAYS 129, WIN_WIDTH 129 * 16;
 # define AIM 0x00FFFF00
 # define RAY 0x0000FF00
 # define ERROR_COLOR 0xFF00FFFF
-# define NORTH 9
-# define SOUTH 8
-# define EAST 7
-# define WEST 6
+# define NORTH 'N'
+# define SOUTH 'S'
+# define EAST 'E'
+# define WEST 'W'
 
-# define M_SPACE 42
+# define M_SPACE ' '
 # define M_NO 101
 # define M_SO 102
 # define M_WE 103
@@ -214,11 +214,11 @@ void		safe_angle(double *angle);
 void		program_init(t_program *program, t_map *map, t_player *player);
 void		player_init(t_player *player, t_map map, t_program *program);
 void		commands_init(t_program *program);
-void		map_init(t_map *map, t_mlx_data *mlx);
-t_sprite	*sprite_init(void *mlx, char *path);
+// void		map_init(t_map *map, t_mlx_data *mlx);
+int			sprite_init(t_sprite **result, void *mlx, char *path);
 void		vs_init(t_program *program);
 int			program_close(t_program *program, int status);
-void		destroy_map(t_map *map);
+// void		destroy_map(t_map *map);
 void		player_aim_init(t_player *player, t_program *program);
 void		ray_init(t_ray *ray, t_player *player, double angle, t_program *program);
 

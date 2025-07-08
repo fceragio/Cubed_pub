@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:09 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 02:32:12 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:19:52 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ this to semplify the logic.
 
 int main(int argc, char **argv)
 {
-	t_map		map;
+	t_map		*map;
 	t_player	player;
 	t_program	program;
 
@@ -28,7 +28,9 @@ int main(int argc, char **argv)
 	mlx = mlx_init();
 	if (mlx == NULL)
 		return (2);
-	printf("parsing->%p\n", parsing(argc, argv[1], mlx));
+	map = parsing(argc, argv[1], mlx);
+	printf("parsing->%p\n", map);
+	destroy_map(map);
 	mlx_destroy_display(mlx);
 	free(mlx);
 	// program_init(&program, &map, &player);
@@ -40,7 +42,7 @@ int main(int argc, char **argv)
 void	program_init(t_program *program, t_map *map, t_player *player)
 {
 	vs_init(program);
-	map_init(map, &program->mlx_data);
+	// map_init(map, &program->mlx_data);
 	program->map = map;
 	player_init(player, *map, program);
 	program->player = player;
