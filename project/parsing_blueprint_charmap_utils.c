@@ -6,11 +6,18 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:03:13 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 21:42:11 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 01:42:37 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
+
+static int	is_spawn(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+		return (SUCCESS);
+	return (FAILURE);
+}
 
 int	spawns_ok(t_map_blueprint *blueprint)
 {
@@ -27,10 +34,7 @@ int	spawns_ok(t_map_blueprint *blueprint)
 		j = 0;
 		while (j < blueprint->x_len)
 		{
-			if (blueprint->char_map[i][j] == 'N'
-				|| blueprint->char_map[i][j] == 'S'
-				|| blueprint->char_map[i][j] == 'W'
-				|| blueprint->char_map[i][j] == 'E')
+			if (is_spawn(blueprint->char_map[i][j]) == SUCCESS)
 			{
 				if (flag == FAILURE)
 					flag = SUCCESS;
@@ -56,9 +60,9 @@ int	flood_fill(t_map_blueprint *blueprint, char **map, int x, int y)
 		return (OK);
 	map[y][x] = 'v';
 	return (flood_fill(blueprint, map, x + 1, y)
-			&& flood_fill(blueprint, map, x - 1, y)
-			&& flood_fill(blueprint, map, x, y + 1)
-			&& flood_fill(blueprint, map, x, y - 1));
+		&& flood_fill(blueprint, map, x - 1, y)
+		&& flood_fill(blueprint, map, x, y + 1)
+		&& flood_fill(blueprint, map, x, y - 1));
 }
 
 int	map_is_closed(t_map_blueprint *blueprint)
@@ -72,13 +76,14 @@ int	map_is_closed(t_map_blueprint *blueprint)
 	while (blueprint->char_map[spawn_y])
 	{
 		spawn_x = 0;
-		while(spawn_x < blueprint->x_len)
+		while (spawn_x < blueprint->x_len)
 		{
 			if (blueprint->char_map[spawn_y][spawn_x] == 'N'
 				|| blueprint->char_map[spawn_y][spawn_x] == 'S'
 				|| blueprint->char_map[spawn_y][spawn_x] == 'W'
 				|| blueprint->char_map[spawn_y][spawn_x] == 'E')
-				return (flood_fill(blueprint, blueprint->char_map, spawn_x, spawn_y));
+				return (flood_fill(blueprint,
+						blueprint->char_map, spawn_x, spawn_y));
 			spawn_x++;
 		}
 		spawn_y++;

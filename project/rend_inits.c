@@ -1,41 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inits.c                                            :+:      :+:    :+:   */
+/*   rend_inits.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/21 16:35:29 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 17:08:04 by federico         ###   ########.fr       */
+/*   Created: 2025/07/09 01:28:17 by federico          #+#    #+#             */
+/*   Updated: 2025/07/09 02:01:46 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
-
-void	vs_init(void *mlx, t_program *program)
-{
-	program->mlx_data.mlx = mlx;
-	program->mlx_data.win = mlx_new_window(program->mlx_data.mlx, WIN_WIDTH, WIN_HEIGHT, "Cubed");
-	if (!program->mlx_data.win)
-	{
-		destroy_map(program->map);
-		mlx_destroy_display(program->mlx_data.mlx);
-		free(program->mlx_data.mlx);
-		exit(MLX_ERR);
-	}
-	program->mlx_data.img = mlx_new_image(program->mlx_data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!program->mlx_data.img)
-	{
-		destroy_map(program->map);
-		mlx_destroy_window(program->mlx_data.mlx, program->mlx_data.win);
-		mlx_destroy_display(program->mlx_data.mlx);
-		free(program->mlx_data.mlx);
-		exit(MLX_ERR);
-	}
-	program->mlx_data.bit_addr = mlx_get_data_addr(program->mlx_data.img, &program->mlx_data.bpp, &program->mlx_data.line_len, &program->mlx_data.endian);
-	if (!program->mlx_data.bit_addr)
-		program_close(program, MLX_ERR);
-}
 
 void	commands_init(t_program *program)
 {
@@ -47,7 +22,7 @@ void	commands_init(t_program *program)
 	program->commands.r_arrow = false;
 }
 
-void	player_init(t_player *player, t_map map, t_program *program)
+static void	set_player_position(t_player *player, t_map map)
 {
 	int	x;
 	int	y;
@@ -69,6 +44,11 @@ void	player_init(t_player *player, t_map map, t_program *program)
 		}
 		y++;
 	}
+}
+
+void	player_init(t_player *player, t_map map, t_program *program)
+{
+	set_player_position(player, map);
 	if (player->angle == NORTH)
 		player->angle = 3 * M_PI / 2;
 	if (player->angle == SOUTH)
@@ -116,15 +96,4 @@ void	ray_init(t_ray *ray, t_player *player, double angle, t_program *program)
 		ray->step_y = +1;
 	ray->wall_side = find_wall_distance(&ray->len, ray, program->map, program);
 	ray->distance = ray->len * safe_cos(ray->angle - player->angle);
-}
-
-int	program_close(t_program *program, int status)
-{
-	destroy_map(program->map);
-	mlx_destroy_image(program->mlx_data.mlx, program->mlx_data.img);
-	mlx_destroy_window(program->mlx_data.mlx, program->mlx_data.win);
-	mlx_destroy_display(program->mlx_data.mlx);
-	free(program->mlx_data.mlx);
-	exit(status);
-	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:02:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 17:14:24 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:27:14 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	create_char_map(t_map_blueprint *blueprint)
 {
-	//keep an eye on this -1 it may cause problems
 	blueprint->x_len = content_max_len(blueprint->map_list) - 1;
 	blueprint->y_len = list_len(blueprint->map_list);
 	if (blueprint->x_len == 0 || blueprint->y_len == 0)

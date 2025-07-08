@@ -6,13 +6,13 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:47 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 16:07:58 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 01:47:43 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-int	check_N_line(char *line)
+int	check_n_line(char *line)
 {
 	int	i;
 
@@ -39,7 +39,7 @@ int	check_N_line(char *line)
 		return (M_ERR);
 }
 
-int	check_S_line(char *line)
+int	check_s_line(char *line)
 {
 	int	i;
 
@@ -66,7 +66,7 @@ int	check_S_line(char *line)
 		return (M_ERR);
 }
 
-int	check_W_line(char *line)
+int	check_w_line(char *line)
 {
 	int	i;
 
@@ -93,7 +93,7 @@ int	check_W_line(char *line)
 		return (M_ERR);
 }
 
-int	check_E_line(char *line)
+int	check_e_line(char *line)
 {
 	int	i;
 

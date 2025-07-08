@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:44:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 22:03:48 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:10:17 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,19 @@ int	identify_line(char *line)
 	if (line[i] == '\n' || line[i] == '\0')
 		return (M_SKIP);
 	else if (line[i] == 'C' && line[i + 1] == ' ')
-		return (check_C_line(line + i));
+		return (check_c_line(line + i));
 	else if (line[i] == 'F' && line[i + 1] == ' ')
-		return (check_F_line(line + i));
+		return (check_f_line(line + i));
 	else if (line[i] == 'N' && line[i + 1] == 'O')
-		return (check_N_line(line + i));
+		return (check_n_line(line + i));
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		return (check_S_line(line + i));
+		return (check_s_line(line + i));
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-		return (check_W_line(line + i));
+		return (check_w_line(line + i));
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-		return (check_E_line(line + i));
-	else if (line[i] == '1' || line[i] == '0' || line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
+		return (check_e_line(line + i));
+	else if (line[i] == '1' || line[i] == '0'
+		|| line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
 		return (M_MAP);
 	else
 		return (M_ERR);
@@ -53,17 +54,17 @@ int	assign_line(char *line, t_map_blueprint *blueprint)
 		return (FAILURE);
 	}
 	else if (id == M_NO)
-		return assign_line_NO(line, blueprint);
+		return (assign_line_no(line, blueprint));
 	else if (id == M_SO)
-		return assign_line_SO(line, blueprint);
+		return (assign_line_so(line, blueprint));
 	else if (id == M_WE)
-		return assign_line_WE(line, blueprint);
+		return (assign_line_we(line, blueprint));
 	else if (id == M_EA)
-		return assign_line_EA(line, blueprint);
+		return (assign_line_ea(line, blueprint));
 	else if (id == M_C)
-		return assign_line_C(line, blueprint);
+		return (assign_line_c(line, blueprint));
 	else if (id == M_F)
-		return assign_line_F(line, blueprint);
+		return (assign_line_f(line, blueprint));
 	free(line);
 	return (SUCCESS);
 }
@@ -81,12 +82,14 @@ int	check_map_line(char *line)
 	{
 		if (line[i] != ' ' && line[i] != '\n')
 		{
-			if (line[i] == '1' || line[i] == '0' || line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
+			if (line[i] == '1' || line[i] == '0'
+				|| line[i] == 'N' || line[i] == 'S'
+				|| line[i] == 'W' || line[i] == 'E')
 				flag = M_MAP;
 			else
 				return (M_ERR);
 		}
-			i++;
+		i++;
 	}
 	return (flag);
 }

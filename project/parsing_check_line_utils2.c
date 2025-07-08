@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:36 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 00:23:20 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 01:51:33 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static int	check_until_first_comma(int *i, char *line)
 		return (M_ERR);
 	while (line[*i] == ' ' || line[*i] == '\t')
 		(*i)++;
-	if (line[*i] == '\n' || line[*i] == '\0' || line[*i] < '0' || line[*i] > '9')
+	if (line[*i] == '\n' || line[*i] == '\0'
+		|| line[*i] < '0' || line[*i] > '9')
 		return (M_ERR);
 	while (line[*i] >= '0' && line[*i] <= '9')
 		(*i)++;
@@ -36,7 +37,8 @@ static int	check_until_second_comma(int *i, char *line)
 	(*i)++;
 	while (line[*i] == ' ' || line[*i] == '\t')
 		(*i)++;
-	if (line[*i] == '\n' || line[*i] == '\0' || line[*i] < '0' || line[*i] > '9')
+	if (line[*i] == '\n' || line[*i] == '\0'
+		|| line[*i] < '0' || line[*i] > '9')
 		return (M_ERR);
 	while (line[*i] >= '0' && line[*i] <= '9')
 		(*i)++;
@@ -47,7 +49,7 @@ static int	check_until_second_comma(int *i, char *line)
 	return (SUCCESS);
 }
 
-int	check_C_line(char *line)
+int	check_c_line(char *line)
 {
 	int	i;
 
@@ -68,7 +70,7 @@ int	check_C_line(char *line)
 	return (M_C);
 }
 
-int	check_F_line(char *line)
+int	check_f_line(char *line)
 {
 	int	i;
 

@@ -6,18 +6,13 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:09 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 17:01:15 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 01:44:54 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-/*
-the map will always be formatted as a square, adding colums or lines of SPACEs where necessary.
-this to semplify the logic.
-*/
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	void		*mlx;
 	t_map		*map;
@@ -32,15 +27,15 @@ int main(int argc, char **argv)
 	{
 		mlx_destroy_display(mlx);
 		free(mlx);
-		return (3);
+		return (1);
 	}
 	program_init(mlx, &program, map, &player);
 	rendering(&program);
-
-	return (3);
+	return (2);
 }
 
-void	program_init(void *mlx, t_program *program, t_map *map, t_player *player)
+void	program_init(void *mlx,
+		t_program *program, t_map *map, t_player *player)
 {
 	vs_init(mlx, program);
 	program->map = map;

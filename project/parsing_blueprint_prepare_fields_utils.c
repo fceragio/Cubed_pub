@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 21:50:02 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 21:53:21 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:07:22 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ char	**split_second_string_commas(char *to_split)
 
 	result = malloc(sizeof(char *) * (COLOR_VALUES + 1));
 	if (result == NULL)
-	{
-		perror("split_second_string_commas malloc");
-		exit(1);
-	}
+		manage_critical_error("split_second_string_commas malloc", MALLOC_ERR);
 	i = 0;
 	book_mark = 0;
 	while (i < COLOR_VALUES)
@@ -73,11 +70,8 @@ char	**split_second_string_commas(char *to_split)
 		len = measure_number(to_split, book_mark);
 		result[i] = malloc(sizeof(char) * (len + 1));
 		if (result[i] == NULL)
-		{
-			//implement critical error to save 6 lines later
-			perror("split_second_string_commas malloc");
-			exit(1);
-		}
+			manage_critical_error("split_second_string_commas malloc",
+				MALLOC_ERR);
 		copy_number(to_split, &book_mark, result[i]);
 		i++;
 	}

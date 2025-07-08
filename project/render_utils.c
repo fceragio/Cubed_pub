@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:45:40 by federico          #+#    #+#             */
-/*   Updated: 2025/07/01 19:31:53 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:15:08 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	render(t_program *program)
 		render_2d(program);
 	else
 		render_3d(program);
-	mlx_put_image_to_window(program->mlx_data.mlx, program->mlx_data.win, program->mlx_data.img, MLX_DEFAULT, MLX_DEFAULT);
+	mlx_put_image_to_window(program->mlx_data.mlx,
+		program->mlx_data.win, program->mlx_data.img, MLX_DEFAULT, MLX_DEFAULT);
 }
 
 int	loop_hook(t_program *program)
@@ -43,17 +44,18 @@ int	loop_hook(t_program *program)
 		last = current;
 		return (0);
 	}
-	total_us = (current.tv_sec - last.tv_sec) * U_SEC + (current.tv_usec - last.tv_usec);
+	total_us = (current.tv_sec - last.tv_sec)
+		* U_SEC + (current.tv_usec - last.tv_usec);
 	if (total_us >= U_FPS)
 	{
 		update_player(program);
-    	render(program);
+		render(program);
 		last.tv_usec += U_FPS;
-    	while (last.tv_usec >= U_SEC)
-    	{
-        	last.tv_usec -= U_SEC;
-        	last.tv_sec += 1;
-    	}
+		while (last.tv_usec >= U_SEC)
+		{
+			last.tv_usec -= U_SEC;
+			last.tv_sec += 1;
+		}
 	}
 	return (0);
 }

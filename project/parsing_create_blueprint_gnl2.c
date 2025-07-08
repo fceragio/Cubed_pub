@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:50:35 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 15:17:52 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:02:25 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_list	*find_last(t_list *list)
 		list = list->next;
 	return (list);
 }
-
 
 void	cleanup(t_list **list)
 {

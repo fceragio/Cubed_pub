@@ -6,13 +6,13 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:59:09 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 14:59:57 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:09:07 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-int	assign_line_NO(char *line, t_map_blueprint *blueprint)
+int	assign_line_no(char *line, t_map_blueprint *blueprint)
 {
 	if (blueprint->No_flag == true)
 	{
@@ -25,7 +25,7 @@ int	assign_line_NO(char *line, t_map_blueprint *blueprint)
 	return (SUCCESS);
 }
 
-int	assign_line_SO(char *line, t_map_blueprint *blueprint)
+int	assign_line_so(char *line, t_map_blueprint *blueprint)
 {
 	if (blueprint->So_flag == true)
 	{
@@ -38,7 +38,7 @@ int	assign_line_SO(char *line, t_map_blueprint *blueprint)
 	return (SUCCESS);
 }
 
-int	assign_line_WE(char *line, t_map_blueprint *blueprint)
+int	assign_line_we(char *line, t_map_blueprint *blueprint)
 {
 	if (blueprint->We_flag == true)
 	{
@@ -51,7 +51,7 @@ int	assign_line_WE(char *line, t_map_blueprint *blueprint)
 	return (SUCCESS);
 }
 
-int	assign_line_EA(char *line, t_map_blueprint *blueprint)
+int	assign_line_ea(char *line, t_map_blueprint *blueprint)
 {
 	if (blueprint->Ea_flag == true)
 	{

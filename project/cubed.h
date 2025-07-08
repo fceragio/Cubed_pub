@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 00:42:56 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:32:49 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE 0
 
 # define EPSILON 0.0001
 # define BASE 43
@@ -55,6 +55,8 @@
 # define NOT_OK 0
 # define MALLOC_ERR 4
 # define MLX_ERR 5
+# define WR_ERR 6
+
 # define BLACK 0x00000000
 # define EMPTY 0x000000FF
 # define FLOOR 0x656565FF
@@ -191,17 +193,16 @@ typedef struct s_program
 	t_commands	commands;
 }	t_program;
 
-char	*get_next_line(int fd);
-void	create_list_till_newl(t_list **list, int fd);
-void	add_node(t_list **list, char *buffer);
-int		new_line(t_list *list);
-t_list	*find_last(t_list *list);
-char	*concatenate_lines(t_list	*list);
-void	cleanup(t_list **list);
-void	freeall_save_leftover(t_list **list, t_list *new_list, char	*leftover);
-size_t	chars_to_newl(t_list *list);
-void	cat_nodes(t_list *list, char *next_line);
-
+char		*get_next_line(int fd);
+void		create_list_till_newl(t_list **list, int fd);
+void		add_node(t_list **list, char *buffer);
+int			new_line(t_list *list);
+t_list		*find_last(t_list *list);
+char		*concatenate_lines(t_list	*list);
+void		cleanup(t_list **list);
+void		freeall_save_leftover(t_list **list, t_list *new_list, char	*leftover);
+size_t		chars_to_newl(t_list *list);
+void		cat_nodes(t_list *list, char *next_line);
 
 double		safe_cos(double	angle);
 double		safe_sin(double angle);
@@ -211,11 +212,9 @@ void		safe_angle(double *angle);
 void		program_init(void *mlx, t_program *program, t_map *map, t_player *player);
 void		player_init(t_player *player, t_map map, t_program *program);
 void		commands_init(t_program *program);
-// void		map_init(t_map *map, t_mlx_data *mlx);
 int			sprite_init(t_sprite **result, void *mlx, char *path);
 void		vs_init(void *mlx, t_program *program);
 int			program_close(t_program *program, int status);
-// void		destroy_map(t_map *map);
 void		player_aim_init(t_player *player, t_program *program);
 void		ray_init(t_ray *ray, t_player *player, double angle, t_program *program);
 
@@ -252,9 +251,7 @@ double		find_horizontal_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_pro
 int			str_len(char *str);
 void		print_str(char *str);
 void		print_error(char *str);
-
-
-
+void		manage_critical_error(char *msg, int stat);
 
 t_map		*parsing(int argc, char *file_path, void *mlx);
 t_map		*create_map(t_map_blueprint **blueprint, void *mlx);
@@ -284,12 +281,12 @@ void		cat_nodes(t_list *list, char *next_line);
 size_t		chars_to_newl(t_list *list);
 void		clear_nextlines(int fd);
 
-int			check_N_line(char *line);
-int			check_S_line(char *line);
-int			check_W_line(char *line);
-int			check_E_line(char *line);
-int			check_C_line(char *line);
-int			check_F_line(char *line);
+int			check_n_line(char *line);
+int			check_s_line(char *line);
+int			check_w_line(char *line);
+int			check_e_line(char *line);
+int			check_c_line(char *line);
+int			check_f_line(char *line);
 
 bool		check_file_name(char *file_path);
 bool		check_file_access(char *file_path);
@@ -309,13 +306,12 @@ int			flood_fill(t_map_blueprint *blueprint, char **map, int x, int y);
 int			map_is_closed(t_map_blueprint *blueprint);
 int			blueprint_map_ok(t_map_blueprint *blueprint);
 
-int			assign_line_C(char *line, t_map_blueprint *blueprint);
-int			assign_line_F(char *line, t_map_blueprint *blueprint);
-int			assign_line_NO(char *line, t_map_blueprint *blueprint);
-int			assign_line_SO(char *line, t_map_blueprint *blueprint);
-int			assign_line_WE(char *line, t_map_blueprint *blueprint);
-int			assign_line_EA(char *line, t_map_blueprint *blueprint);
-
+int			assign_line_c(char *line, t_map_blueprint *blueprint);
+int			assign_line_f(char *line, t_map_blueprint *blueprint);
+int			assign_line_no(char *line, t_map_blueprint *blueprint);
+int			assign_line_so(char *line, t_map_blueprint *blueprint);
+int			assign_line_we(char *line, t_map_blueprint *blueprint);
+int			assign_line_ea(char *line, t_map_blueprint *blueprint);
 
 void		blueprint_prepare_fields(t_map_blueprint *blueprint);
 int			trimmed_len(char *to_trim);
@@ -326,5 +322,17 @@ int			measure_number(char *str, int start);
 void		copy_number(char *to_copy, int *start, char *buffer);
 char		**split_second_string_commas(char *to_split);
 
+void		destroy_map(t_map *map);
+void		destroy_texture(t_sprite *sprite);
+t_map		*map_init(void);
+int			blueprint_ok(t_map_blueprint *blueprint);
+int			blueprint_f_c_colors(t_map_blueprint *blueprint);
+int			string_to_int(char *str);
+int			sprite_init(t_sprite **result, void *mlx, char *path);
+int			set_map_textures(t_map *map, t_map_blueprint *blueprint, void *mlx);
+void		copy_array(t_map *map, t_list *list);
+void		set_map_array(t_map *map, t_map_blueprint *blueprint);
+int			set_map_colors(t_map *map, t_map_blueprint *blueprint);
+t_map		*blueprint_to_map(t_map_blueprint *blueprint, void *mlx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:34:41 by federico          #+#    #+#             */
-/*   Updated: 2025/07/07 15:20:35 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 01:35:07 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ bool	cub_file_is_ok(int argc, char *file_path)
 	if (check_file_name(file_path) == FAILURE)
 		return (FAILURE);
 	if (check_file_access(file_path) == FAILURE)
-		return (FAILURE);	
+		return (FAILURE);
 	return (SUCCESS);
 }

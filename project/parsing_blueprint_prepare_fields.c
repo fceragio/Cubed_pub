@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 21:48:01 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 00:31:32 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:25:50 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	trimmed_len(char *to_trim)
 		i++;
 	while (to_trim[i] == ' ' || to_trim[i] == '\t')
 		i++;
-	while (to_trim[i] && to_trim[i] != ' ' && to_trim[i] != '\t' && to_trim[i] != '\n')
+	while (to_trim[i] && to_trim[i] != ' ' && to_trim[i] != '\t'
+		&& to_trim[i] != '\n')
 	{
 		len++;
 		i++;
@@ -60,7 +61,8 @@ void	copy_only_second_string(char *to_copy, char *buffer)
 		i++;
 	while (to_copy[i] == ' ' || to_copy[i] == '\t')
 		i++;
-	while (to_copy[i] && to_copy[i] != ' ' && to_copy[i] != '\t' && to_copy[i] != '\n')
+	while (to_copy[i] && to_copy[i] != ' ' && to_copy[i] != '\t'
+		&& to_copy[i] != '\n')
 	{
 		buffer[j] = to_copy[i];
 		i++;

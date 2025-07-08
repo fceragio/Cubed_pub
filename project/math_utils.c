@@ -6,13 +6,13 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:00:52 by federico          #+#    #+#             */
-/*   Updated: 2025/06/27 17:47:02 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:27:49 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-double	safe_cos(double	angle)
+double	safe_cos(double angle)
 {
 	double	tmp;
 

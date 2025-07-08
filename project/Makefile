@@ -1,15 +1,12 @@
 NAME = cubed
 
 CC = cc
-CFLAGS = -Wall -Wextra -O3 -MMD -MP #-Werror
+CFLAGS = -Wall -Wextra -O3 -MMD -MP -Werror
 
 RM = rm -f
 
 SRCS = main.c \
-		inits.c \
-		map.c \
 		events.c \
-		movement.c \
 		math_utils.c \
 		render_utils.c \
 		render_2d.c \
@@ -23,13 +20,23 @@ SRCS = main.c \
 		parsing_blueprint_prepare_fields.c \
 		parsing_blueprint_prepare_fields_utils.c \
 		parsing_blueprint_utils.c \
+		parsing_blueprint_ok.c \
 		parsing_check_file.c \
 		parsing_check_line_utils1.c \
 		parsing_check_line_utils2.c \
 		parsing_create_blueprint_gnl1.c \
 		parsing_create_blueprint_gnl2.c \
 		parsing_create_blueprint_utils.c \
-		parsing_list_utils.c
+		parsing_map.c \
+		parsing_map_utils.c \
+		parsing_list_utils.c \
+		rend_inits.c \
+		rend_init_vs.c \
+		rend_movement.c \
+		rend_movement_turning.c \
+		rend_wall_utils.c \
+		rend_wall_utils_vrt_hit.c \
+		rend_wall_utils_hrz_hit.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)
