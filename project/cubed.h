@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 15:48:40 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:38:48 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,27 @@
 # define M_ERR 109
 # define COLOR_VALUES 3
 
+typedef struct s_list
+{
+	char			*content;
+	struct s_list	*next;
+}				t_list;
+
+typedef struct s_2d_ren_data
+{
+	double	x0;
+	double	y0;
+	double	x1;
+	double	y1;
+	double	dx;
+	double	dy;
+	double	max_steps;
+	double	step_x;
+	double	step_y;
+	double	x;
+	double	y;
+}	t_2d_ren_data;
+
 typedef struct s_mlx_data
 {
 	void		*mlx;
@@ -151,12 +172,6 @@ typedef struct s_map
 	t_sprite	*west_wall_texture;
 	t_sprite	*east_wall_texture;
 }	t_map;
-
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}				t_list;
 
 typedef struct s_map_blueprint
 {
@@ -348,5 +363,33 @@ void		copy_array(t_map *map, t_list *list);
 void		set_map_array(t_map *map, t_map_blueprint *blueprint);
 int			set_map_colors(t_map *map, t_map_blueprint *blueprint);
 t_map		*blueprint_to_map(t_map_blueprint *blueprint, void *mlx);
+
+//DEBUG
+void		render_2d(t_program *program);
+void		render_2d_map(t_map *map, t_program *program);
+void		render_2d_player(t_player *player, t_program *program);
+void		render_2d_rays(t_player *player, t_program *program);
+void		render_2d_ray(t_ray ray, t_program *program, int color);
+void		put_empty_2d(int i, int j, t_program *program);
+void		put_wall_2d(int i, int j, t_program *program);
+void		reset_2d(t_program *program);
+
+//RENDERING 3D
+void		render_3d(t_program *program);
+void		render_sealing(t_program *program);
+void		render_floor(t_program *program);
+void		render_walls(t_program *program);
+void		put_ray_pixels(t_point pixel, t_program *program);
+int			get_wall_color(t_map *map, t_ray ray,
+				t_point pixel, int y_len);
+int			get_texture_color(int x, int y, t_sprite texture);
+int			get_north_wall_color(t_map *map, t_ray ray,
+				t_point pixel, int y_len);
+int			get_south_wall_color(t_map *map, t_ray ray,
+				t_point pixel, int y_len);
+int			get_west_wall_color(t_map *map, t_ray ray,
+				t_point pixel, int y_len);
+int			get_east_wall_color(t_map *map, t_ray ray,
+				t_point pixel, int y_len);
 
 #endif

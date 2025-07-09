@@ -6,11 +6,6 @@ CFLAGS = -Wall -Wextra -O3 -MMD -MP -Werror
 RM = rm -f
 
 SRCS = main.c \
-		events.c \
-		math_utils.c \
-		render_utils.c \
-		render_2d.c \
-		render_3d.c \
 		print_utils.c \
 		parsing.c \
 		parsing_assign_line_utils1.c \
@@ -30,13 +25,21 @@ SRCS = main.c \
 		parsing_map.c \
 		parsing_map_utils.c \
 		parsing_list_utils.c \
+		rend_events.c \
+		rend_math.c \
 		rend_inits.c \
 		rend_init_vs.c \
 		rend_movement.c \
 		rend_movement_turning.c \
 		rend_wall_utils.c \
 		rend_wall_utils_vrt_hit.c \
-		rend_wall_utils_hrz_hit.c
+		rend_wall_utils_hrz_hit.c \
+		render_utils.c \
+		render_3d.c \
+		render_3d_walls.c \
+		render_3d_walls_utils.c \
+		rend_debug.c \
+		rend_debug_utils.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)
