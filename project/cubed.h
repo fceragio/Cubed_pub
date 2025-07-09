@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 17:08:19 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 19:42:17 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE 0
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -34,10 +34,10 @@
 # define WALL_SIZE 960
 
 //cleanly divides win_width
-# define NUM_RAYS 64
+# define NUM_RAYS 1920
 
 //win_width / num_rays
-# define WID_RAYS 30
+# define WID_RAYS 1
 
 //1 / 20
 # define SPEED 0.05
@@ -47,11 +47,6 @@
 
 //m_pi / 2.5
 # define FOV 1.5
-
-# define U_SEC 1000000
-# define FPS 20
-// u_sec / fps
-# define U_FPS 50000
 
 # define EPSILON 0.0001
 # define BUFFER_SIZE 64
@@ -274,6 +269,7 @@ void		copy_number(char *to_copy, int *start, char *buffer);
 char		**split_second_string_commas(char *to_split);
 //map
 t_map		*map_init(void);
+int			sprite_init(t_sprite **result, void *mlx, char *path);
 void		destroy_map(t_map *map);
 void		destroy_texture(t_sprite *sprite);
 int			blueprint_ok(t_map_blueprint *blueprint);
@@ -335,8 +331,6 @@ void		safe_angle(double *angle);
 void		program_init(void *mlx, t_program *program,
 				t_map *map, t_player *player);
 void		player_init(t_player *player, t_map map, t_program *program);
-void		commands_init(t_program *program);
-int			sprite_init(t_sprite **result, void *mlx, char *path);
 void		vs_init(void *mlx, t_program *program);
 int			program_close(t_program *program, int status);
 void		player_aim_init(t_player *player, t_program *program);
@@ -354,11 +348,8 @@ void		hook_handlers(t_program *program);
 int			red_x_press_handling(t_program *program);
 int			visibility_handling(t_program *program);
 int			key_press_handling(int keysym, t_program *program);
-int			key_release_handling(int keysym, t_program *program);
-void		update_player(t_program *program);
 void		rendering(t_program *program);
 void		render(t_program *program);
-int			loop_hook(t_program *program);
 void		render_3d(t_program *program);
 void		render_2d(t_program *program);
 void		turn_pov(int keysym, t_program *program);

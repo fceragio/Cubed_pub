@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:39:38 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 15:40:54 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 18:56:06 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ void	clear_char_matrix(char **char_map)
 	i = 0;
 	while (char_map[i])
 	{
-		printf("%s\n", char_map[i]);
 		free(char_map[i]);
 		i++;
 	}
 	free(char_map);
-	printf("\n");
 }
 
 void	clear_blueprint(t_map_blueprint **blueprint)
@@ -66,7 +64,6 @@ void	clear_blueprint(t_map_blueprint **blueprint)
 	while ((*blueprint)->map_list)
 	{
 		temp = (*blueprint)->map_list->next;
-		printf("%s\n", (*blueprint)->map_list->content);
 		free((*blueprint)->map_list->content);
 		free((*blueprint)->map_list);
 		(*blueprint)->map_list = temp;

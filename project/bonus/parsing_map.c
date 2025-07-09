@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 00:57:17 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 15:43:32 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 18:56:50 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ void	copy_array(t_map *map, t_list *list)
 				map->arr[y][x] = M_SPACE;
 			else
 				map->arr[y][x] = list->content[x];
-			printf("%d ", map->arr[y][x]);
 			x++;
 		}
 		list = list->next;
 		y++;
-		printf("\n");
 	}
 }
 

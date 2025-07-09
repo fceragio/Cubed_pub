@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 17:08:19 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 19:18:05 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE 0
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -34,10 +34,10 @@
 # define WALL_SIZE 960
 
 //cleanly divides win_width
-# define NUM_RAYS 64
+# define NUM_RAYS 1920
 
 //win_width / num_rays
-# define WID_RAYS 30
+# define WID_RAYS 1
 
 //1 / 20
 # define SPEED 0.05

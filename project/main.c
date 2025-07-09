@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:09 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 01:44:54 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 18:49:56 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	program_init(void *mlx,
 
 void	rendering(t_program *program)
 {
-	commands_init(program);
 	hook_handlers(program);
-	mlx_loop_hook(program->mlx_data.mlx, loop_hook, program);
+	render(program);
 	mlx_loop(program->mlx_data.mlx);
 }

@@ -6,21 +6,11 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 01:28:17 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 02:01:46 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 18:50:26 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
-
-void	commands_init(t_program *program)
-{
-	program->commands.w = false;
-	program->commands.a = false;
-	program->commands.s = false;
-	program->commands.d = false;
-	program->commands.l_arrow = false;
-	program->commands.r_arrow = false;
-}
 
 static void	set_player_position(t_player *player, t_map map)
 {
