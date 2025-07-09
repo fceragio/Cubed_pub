@@ -6,12 +6,16 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/10 00:10:21 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/10 01:06:46 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBED_H
 # define CUBED_H
+
+//to make this faster, we could render sky and floor only where necessary.
+//it would be a good idea also to check if the player actually moved or not,
+//and render only if the movement button actually changed something in him
 
 # include "../mlx_linux/mlx.h"
 # include <X11/X.h>

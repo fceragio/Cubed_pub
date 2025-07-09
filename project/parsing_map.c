@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 00:57:17 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 18:56:18 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/10 00:59:46 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ void	copy_array(t_map *map, t_list *list)
 	while (y < map->y_dimension)
 	{
 		x = 0;
-		while (x < map->x_dimension)
+		while (list->content[x] && list->content[x] != '\n')
 		{
 			if (list->content[x] == '1')
 				map->arr[y][x] = 1;
 			else if (list->content[x] == '0')
 				map->arr[y][x] = 0;
-			else if (list->content[x] == '\0' || list->content[x] == '\n')
-				map->arr[y][x] = M_SPACE;
 			else
 				map->arr[y][x] = list->content[x];
+			x++;
+		}
+		while (x < map->x_dimension)
+		{
+			map->arr[y][x] = M_SPACE;
 			x++;
 		}
 		list = list->next;
