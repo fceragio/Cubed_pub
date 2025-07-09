@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 19:42:17 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 23:16:43 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@
 
 # define DEBUG_MODE 0
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 960
+# define WIN_HEIGHT 540
 # define TILE_SIZE 32
 
-// win_width / 2
-# define WALL_SIZE 960
+// win_width / 2 make them nice and squared
+# define WALL_SIZE 480
 
-//cleanly divides win_width
-# define NUM_RAYS 1920
+//same as win_width or cleanly divides win_width
+# define NUM_RAYS 960
 
 //win_width / num_rays
 # define WID_RAYS 1
 
 //1 / 20
-# define SPEED 0.05
+# define SPEED 0.07
 
 //m_pi / 64
 # define SENSITIVITY 0.05
