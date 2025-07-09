@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 21:48:01 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 02:25:50 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:38:24 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	blueprint_prepare_fields(t_map_blueprint *blueprint)
 {
-	blueprint->No = keep_only_second_string(blueprint->No);
-	blueprint->So = keep_only_second_string(blueprint->So);
-	blueprint->We = keep_only_second_string(blueprint->We);
-	blueprint->Ea = keep_only_second_string(blueprint->Ea);
-	blueprint->split_C = split_second_string_commas(blueprint->C);
-	blueprint->split_F = split_second_string_commas(blueprint->F);
+	blueprint->no = keep_only_second_string(blueprint->no);
+	blueprint->so = keep_only_second_string(blueprint->so);
+	blueprint->we = keep_only_second_string(blueprint->we);
+	blueprint->ea = keep_only_second_string(blueprint->ea);
+	blueprint->split_c = split_second_string_commas(blueprint->c);
+	blueprint->split_f = split_second_string_commas(blueprint->f);
 }
 
 int	trimmed_len(char *to_trim)

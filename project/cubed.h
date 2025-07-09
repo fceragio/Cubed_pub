@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 02:32:49 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:48:40 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,35 @@
 
 # define DEBUG_MODE 0
 
-# define EPSILON 0.0001
-# define BASE 43
-# define WID_BASE (15 * 3)
-# define RESOLUTION_1 (43)
-# define RESOLUTION_2 (15)
-# define RESOLUTION_3 (3)
-# define WIN_WIDTH (WID_BASE * BASE)
-# define WIN_HEIGHT ((WIN_WIDTH / 16) * 9)
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 # define TILE_SIZE 32
-# define BUFFER_SIZE 64
 
-# define RESOLUTION RESOLUTION_2
-# define WALL_SIZE (WIN_WIDTH / 2)
-# define NUM_RAYS (WIN_WIDTH / RESOLUTION)
-# define WID_RAYS (WIN_WIDTH / NUM_RAYS)
+// win_width / 2
+# define WALL_SIZE 960
+
+//cleanly divides win_width
+# define NUM_RAYS 64
+
+//win_width / num_rays
+# define WID_RAYS 30
+
+//1 / 20
+# define SPEED 0.05
+
+//m_pi / 64
+# define SENSITIVITY 0.05
+
+//m_pi / 2.5
+# define FOV 1.5
+
 # define U_SEC 1000000
 # define FPS 20
-# define U_FPS (U_SEC / FPS)
-# define SPEED 0.05
-# define SENSITIVITY (M_PI / 64.0)
-# define FOV (M_PI / 2.5)
+// u_sec / fps
+# define U_FPS 50000
 
+# define EPSILON 0.0001
+# define BUFFER_SIZE 64
 # define MLX_DEFAULT 0
 # define SUCCESS 0
 # define FAILURE 1
@@ -153,22 +160,22 @@ typedef struct s_list
 
 typedef struct s_map_blueprint
 {
-	bool	No_flag;
-	bool	So_flag;
-	bool	We_flag;
-	bool	Ea_flag;
-	bool	C_flag;
-	bool	F_flag;
-	char	*No;
-	char	*So;
-	char	*We;
-	char	*Ea;
-	char	*C;
-	char	*F;
-	int		C_vals[COLOR_VALUES];
-	int		F_vals[COLOR_VALUES];
-	char	**split_C;
-	char	**split_F;
+	bool	no_flag;
+	bool	so_flag;
+	bool	we_flag;
+	bool	ea_flag;
+	bool	c_flag;
+	bool	f_flag;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*c;
+	char	*f;
+	int		c_vals[COLOR_VALUES];
+	int		f_vals[COLOR_VALUES];
+	char	**split_c;
+	char	**split_f;
 	t_list	*map_list;
 	char	**char_map;
 	int		x_len;
@@ -198,25 +205,28 @@ void		create_list_till_newl(t_list **list, int fd);
 void		add_node(t_list **list, char *buffer);
 int			new_line(t_list *list);
 t_list		*find_last(t_list *list);
-char		*concatenate_lines(t_list	*list);
+char		*concatenate_lines(t_list *list);
 void		cleanup(t_list **list);
-void		freeall_save_leftover(t_list **list, t_list *new_list, char	*leftover);
+void		freeall_save_leftover(t_list **list,
+				t_list *new_list, char *leftover);
 size_t		chars_to_newl(t_list *list);
 void		cat_nodes(t_list *list, char *next_line);
 
-double		safe_cos(double	angle);
+double		safe_cos(double angle);
 double		safe_sin(double angle);
 double		safe_tan(double angle);
 void		safe_angle(double *angle);
 
-void		program_init(void *mlx, t_program *program, t_map *map, t_player *player);
+void		program_init(void *mlx, t_program *program,
+				t_map *map, t_player *player);
 void		player_init(t_player *player, t_map map, t_program *program);
 void		commands_init(t_program *program);
 int			sprite_init(t_sprite **result, void *mlx, char *path);
 void		vs_init(void *mlx, t_program *program);
 int			program_close(t_program *program, int status);
 void		player_aim_init(t_player *player, t_program *program);
-void		ray_init(t_ray *ray, t_player *player, double angle, t_program *program);
+void		ray_init(t_ray *ray, t_player *player,
+				double angle, t_program *program);
 
 void		hook_handlers(t_program *program);
 int			red_x_press_handling(t_program *program);
@@ -244,9 +254,12 @@ void		move_left(t_program *program);
 void		move_right(t_program *program);
 
 int			not_wall(int x, int y, t_program *program);
-int			find_wall_distance(double *distance, t_ray *ray, t_map *map, t_program *program);
-double		find_vertical_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_program *program);
-double		find_horizontal_hit_distance(t_ray *ray, t_map *map, t_point *hit, t_program *program);
+int			find_wall_distance(double *distance,
+				t_ray *ray, t_map *map, t_program *program);
+double		find_vertical_hit_distance(t_ray *ray,
+				t_map *map, t_point *hit, t_program *program);
+double		find_horizontal_hit_distance(t_ray *ray,
+				t_map *map, t_point *hit, t_program *program);
 
 int			str_len(char *str);
 void		print_str(char *str);
@@ -274,7 +287,8 @@ void		add_node(t_list **list, char *buffer);
 int			new_line(t_list *list);
 t_list		*find_last(t_list *list);
 void		cleanup(t_list **list);
-void		freeall_save_leftover(t_list **list, t_list *new_list, char	*leftover);
+void		freeall_save_leftover(t_list **list,
+				t_list *new_list, char	*leftover);
 void		create_list_till_newl(t_list **list, int fd);
 char		*concatenate_lines(t_list	*list);
 void		cat_nodes(t_list *list, char *next_line);

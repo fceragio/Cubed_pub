@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 00:57:17 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 02:30:44 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:43:32 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,22 @@ void	set_map_array(t_map *map, t_map_blueprint *blueprint)
 
 int	set_map_colors(t_map *map, t_map_blueprint *blueprint)
 {
-	map->sealing_color = (blueprint->C_vals[0] << 16) | (
-			blueprint->C_vals[1] << 8) | blueprint->C_vals[2];
-	map->floor_color = (blueprint->F_vals[0] << 16) | (
-			blueprint->F_vals[1] << 8) | blueprint->F_vals[2];
+	map->sealing_color = (blueprint->c_vals[0] << 16) | (
+			blueprint->c_vals[1] << 8) | blueprint->c_vals[2];
+	map->floor_color = (blueprint->f_vals[0] << 16) | (
+			blueprint->f_vals[1] << 8) | blueprint->f_vals[2];
 	return (SUCCESS);
 }
 
 int	set_map_textures(t_map *map, t_map_blueprint *blueprint, void *mlx)
 {
-	if (sprite_init(&map->north_wall_texture, mlx, blueprint->No) == FAILURE)
+	if (sprite_init(&map->north_wall_texture, mlx, blueprint->no) == FAILURE)
 		return (FAILURE);
-	if (sprite_init(&map->south_wall_texture, mlx, blueprint->So) == FAILURE)
+	if (sprite_init(&map->south_wall_texture, mlx, blueprint->so) == FAILURE)
 		return (FAILURE);
-	if (sprite_init(&map->west_wall_texture, mlx, blueprint->We) == FAILURE)
+	if (sprite_init(&map->west_wall_texture, mlx, blueprint->we) == FAILURE)
 		return (FAILURE);
-	if (sprite_init(&map->east_wall_texture, mlx, blueprint->Ea) == FAILURE)
+	if (sprite_init(&map->east_wall_texture, mlx, blueprint->ea) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

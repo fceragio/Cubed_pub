@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 21:23:59 by federico          #+#    #+#             */
-/*   Updated: 2025/07/08 17:24:23 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:30:55 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,7 @@ static void	render_2d_rays(t_player *player, t_program *program)
 	render_2d_ray(player->aim, program, AIM);
 	while (i < NUM_RAYS)
 	{
-		if (i == (NUM_RAYS / 2))
-			render_2d_ray(player->fov[i], program, PLAYER);
-		else
-			render_2d_ray(player->fov[i], program, RAY);
+		render_2d_ray(player->fov[i], program, RAY);
 		i++;
 	}
 }

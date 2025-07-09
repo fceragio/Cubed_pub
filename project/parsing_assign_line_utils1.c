@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:59:09 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 02:09:07 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:36:19 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,52 @@
 
 int	assign_line_no(char *line, t_map_blueprint *blueprint)
 {
-	if (blueprint->No_flag == true)
+	if (blueprint->no_flag == true)
 	{
 		print_error("Error\nMore lines contain north_texture path\n");
 		free(line);
 		return (FAILURE);
 	}
-	blueprint->No_flag = true;
-	blueprint->No = line;
+	blueprint->no_flag = true;
+	blueprint->no = line;
 	return (SUCCESS);
 }
 
 int	assign_line_so(char *line, t_map_blueprint *blueprint)
 {
-	if (blueprint->So_flag == true)
+	if (blueprint->so_flag == true)
 	{
 		print_error("Error\nMore lines contain south_texture path\n");
 		free(line);
 		return (FAILURE);
 	}
-	blueprint->So_flag = true;
-	blueprint->So = line;
+	blueprint->so_flag = true;
+	blueprint->so = line;
 	return (SUCCESS);
 }
 
 int	assign_line_we(char *line, t_map_blueprint *blueprint)
 {
-	if (blueprint->We_flag == true)
+	if (blueprint->we_flag == true)
 	{
 		print_error("Error\nMore lines contain west_texture path\n");
 		free(line);
 		return (FAILURE);
 	}
-	blueprint->We_flag = true;
-	blueprint->We = line;
+	blueprint->we_flag = true;
+	blueprint->we = line;
 	return (SUCCESS);
 }
 
 int	assign_line_ea(char *line, t_map_blueprint *blueprint)
 {
-	if (blueprint->Ea_flag == true)
+	if (blueprint->ea_flag == true)
 	{
 		print_error("Error\nMore lines contain east_texture path\n");
 		free(line);
 		return (FAILURE);
 	}
-	blueprint->Ea_flag = true;
-	blueprint->Ea = line;
+	blueprint->ea_flag = true;
+	blueprint->ea = line;
 	return (SUCCESS);
 }

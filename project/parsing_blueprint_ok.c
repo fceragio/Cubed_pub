@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 01:02:20 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 02:33:20 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:42:30 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	blueprint_ok(t_map_blueprint *blueprint)
 {
-	if (blueprint->No_flag == false || blueprint->So_flag == false
-		|| blueprint->We_flag == false || blueprint->Ea_flag == false
-		|| blueprint->C_flag == false || blueprint->F_flag == false)
+	if (blueprint->no_flag == false || blueprint->so_flag == false
+		|| blueprint->we_flag == false || blueprint->ea_flag == false
+		|| blueprint->c_flag == false || blueprint->f_flag == false)
 	{
 		print_error("Error\nThe file didn't contain all the fields required\n");
 		return (FAILURE);
@@ -37,19 +37,19 @@ int	blueprint_f_c_colors(t_map_blueprint *blueprint)
 	i = 0;
 	while (i < COLOR_VALUES)
 	{
-		blueprint->C_vals[i] = string_to_int(blueprint->split_C[i]);
-		if (blueprint->C_vals[i] == -1)
+		blueprint->c_vals[i] = string_to_int(blueprint->split_c[i]);
+		if (blueprint->c_vals[i] == -1)
 		{
 			print_error("Error\n");
-			print_error(blueprint->split_C[i]);
+			print_error(blueprint->split_c[i]);
 			print_error(" is not a valid value for cealing color\n");
 			return (FAILURE);
 		}
-		blueprint->F_vals[i] = string_to_int(blueprint->split_F[i]);
-		if (blueprint->F_vals[i] == -1)
+		blueprint->f_vals[i] = string_to_int(blueprint->split_f[i]);
+		if (blueprint->f_vals[i] == -1)
 		{
 			print_error("Error\n");
-			print_error(blueprint->split_F[i]);
+			print_error(blueprint->split_f[i]);
 			print_error(" is not a valid value for floor color\n");
 			return (FAILURE);
 		}
