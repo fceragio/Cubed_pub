@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:07:58 by federico          #+#    #+#             */
-/*   Updated: 2025/07/10 01:06:46 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:32:48 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -103,6 +103,15 @@ typedef struct s_2d_ren_data
 	double	x;
 	double	y;
 }	t_2d_ren_data;
+
+typedef struct s_3d_ren_data
+{
+	int	y;
+	int	y_start;
+	int	y_end;
+	int	color;
+	int	i;
+}	t_3d_ren_data;
 
 typedef struct s_find_hit_data
 {

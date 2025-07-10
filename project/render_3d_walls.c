@@ -6,33 +6,45 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:22:52 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 16:41:16 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:32:31 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
+static void	put_ray_pixels_data_init(t_3d_ren_data *data,
+		t_point pixel, t_program *program)
+{
+	data->i = pixel.y;
+	data->y_start = (WIN_HEIGHT / 2) - (
+			WALL_SIZE / program->player->fov[data->i].distance) / 2;
+	data->y_end = (WIN_HEIGHT / 2) + (
+			WALL_SIZE / program->player->fov[data->i].distance) / 2;
+	data->y = 0;
+}
+
 void	put_ray_pixels(t_point pixel, t_program *program)
 {
-	int	y;
-	int	y_start;
-	int	y_end;
-	int	color;
-	int	i;
+	t_3d_ren_data	data;
 
-	i = pixel.y;
-	y_start = (WIN_HEIGHT / 2) - (
-			WALL_SIZE / program->player->fov[i].distance) / 2;
-	y_end = (WIN_HEIGHT / 2) + (
-			WALL_SIZE / program->player->fov[i].distance) / 2;
-	y = y_start;
-	while (y <= y_end)
+	put_ray_pixels_data_init(&data, pixel, program);
+	while (data.y < data.y_start)
 	{
-		pixel.y = y;
-		color = get_wall_color(program->map,
-				program->player->fov[i], pixel, y_end - y_start);
-		put_pixel(program, pixel.x, pixel.y, color);
-		y++;
+		put_pixel(program, pixel.x, data.y, program->map->sealing_color);
+		data.y++;
+	}
+	while (data.y <= data.y_end)
+	{
+		pixel.y = data.y;
+		data.color = get_wall_color(program->map,
+				program->player->fov[data.i], pixel, data.y_end - data.y_start);
+		put_pixel(program, pixel.x, pixel.y, data.color);
+		data.y++;
+	}
+	while (data.y < WIN_HEIGHT)
+	{
+		put_pixel(program, pixel.x, data.y, program->map->floor_color);
+		data.y++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: federico <federico@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:22:10 by federico          #+#    #+#             */
-/*   Updated: 2025/07/09 16:40:36 by federico         ###   ########.fr       */
+/*   Updated: 2025/07/10 14:32:02 by federico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	render_3d(t_program *program)
 {
-	render_sealing(program);
-	render_floor(program);
 	render_walls(program);
 }
 
